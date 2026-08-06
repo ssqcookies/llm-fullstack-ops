@@ -7,10 +7,12 @@
 import os
 
 from flask import Flask
+from flask_cors import CORS
 from flask_migrate import Migrate
 
 from config.config import Config
 from internal.exception import CustomException
+from internal.model import App
 from internal.router import Router
 from pkg.response import json, Response, ResponseCode
 from pkg.sqlalchemy import SQLAlchemy
@@ -39,9 +41,19 @@ class Http(Flask):
         # 初始化flask扩展
         db.init_app(self)
         migrate.init_app(self, db=db, directory="internal/migration")
-        # with self.app_context():
-        #     _ = App()
-        #     db.create_all()
+        # 解决前后端跨域问题
+        CORS(self, resources={
+            r"/*": {
+                "origins": "*",
+                "supports_credentials": True,
+                # 以下配置可以不设置，默认
+                "methods": ["GET", "POST"],
+                "allow_headers": ["Content-Type"],
+            }
+        })
+        with self.app_context():
+            _ = App()
+            db.create_all()
 
         # 注册应用路由
         router.register_router(self)

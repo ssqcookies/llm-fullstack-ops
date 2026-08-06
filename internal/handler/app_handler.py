@@ -8,7 +8,9 @@ import uuid
 from dataclasses import dataclass
 
 from injector import inject
-from openai import OpenAI
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 
 from internal.exception import ValidationException, FailException
 from internal.schema.app_schema import KimiForm
@@ -51,21 +53,35 @@ class AppHandler:
         if not req.validate():
             raise ValidationException(req.errors)
         # 校验通过，用 .data 拿真实字符串
+        # query_content = req.query.data
+        #
+        # # 2 构建openai客户端，并发起请求
+        # kimi_client = OpenAI(
+        #     api_key=os.getenv("KIMI_API_KEY"),
+        #     base_url=os.getenv("KIMI_BASE_URL")
+        # )
+        #
+        # resp = kimi_client.chat.completions.create(
+        #     model="kimi-k2.7-code",
+        #     messages=[
+        #         {"role": "user", "content": query_content}
+        #     ]
+        # )
+        # ai_answer = resp.choices[0].message.content
+        #
+        # # 3. 包装JSON返回给前端
+        # return success_resp({"content": ai_answer})
         query_content = req.query.data
 
-        # 2 构建openai客户端，并发起请求
-        kimi_client = OpenAI(
+        prompt = ChatPromptTemplate.from_template("{query}")
+        llm = ChatOpenAI(
             api_key=os.getenv("KIMI_API_KEY"),
-            base_url=os.getenv("KIMI_BASE_URL")
+            base_url=os.getenv("KIMI_BASE_URL"),
+            model="kimi-k2.7-code"
         )
+        parser = StrOutputParser()
 
-        resp = kimi_client.chat.completions.create(
-            model="kimi-k2.7-code",
-            messages=[
-                {"role": "user", "content": query_content}
-            ]
-        )
-        ai_answer = resp.choices[0].message.content
+        chain = prompt | llm | parser
+        content = chain.invoke({"query": query_content})
 
-        # 3. 包装JSON返回给前端
-        return success_resp({"content": ai_answer})
+        return success_resp({"content": content})

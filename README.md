@@ -1,6 +1,6 @@
 # llm-fullstack-ops
 
-轻量化LLMOps全栈工程化落地脚手架 | Python3.12 + Flask + LangChain 0.2.1
+V1.0版本————轻量化LLMOps全栈工程化落地脚手架 | Python3.12 + Flask + LangChain 0.2.1
 License: MIT
 
 ## 一、项目定位

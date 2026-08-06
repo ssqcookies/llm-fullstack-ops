@@ -19,7 +19,8 @@ class Config:
 
     def __init__(self):
         # 开发环境关闭wtf的csrf保护
-        self.WTF_CSRF_ENABLED = _get_env("WTF_CSRF_ENABLED")
+        self.WTF_CSRF_ENABLED = False
+
         # 配置数据库
         self.SQLALCHEMY_DATABASE_URI = _get_env("SQLALCHEMY_DATABASE_URI")
         self.SQLALCHEMY_ENGINE_OPTIONS = {"pool_size": int(_get_env("SQLALCHEMY_POOL_SIZE")),
