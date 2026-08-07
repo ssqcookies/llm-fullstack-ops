@@ -45,7 +45,7 @@ class AppHandler:
         raise FailException("数据未找到")
         # return "pong"
 
-    def completion(self):
+    def completion(self, app_id: uuid.UUID):
         """聊天接口"""
         # 1 提取从接口中获取的输入，post
         # query = request.json.get("query")

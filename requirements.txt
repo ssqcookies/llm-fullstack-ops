@@ -13,10 +13,11 @@ Flask-Migrate==4.1.0
 
 # LLM 核心框架 LangChain
 langchain==0.2.1
-langchain-core==1.5.3
+langchain-core==0.2.2
 langsmith>=0.1.17,<0.2.0
-langchain-openai>=0.1.0
+langchain-openai==0.1.8
 langchain-community==0.2.1
+langchain-text-splitters==0.2.1
 
 # 向量库 & 知识库RAG依赖
 chromadb==0.5.6
@@ -30,7 +31,7 @@ markdown==3.7
 unstructured==0.15.13
 
 # 环境变量读取（加载.env里Kimi、智谱API Key）
-openai==2.52.0
+openai==1.109.1
 python-dotenv==1.2.2
 
 # HTTP请求、数据处理
