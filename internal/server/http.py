@@ -41,16 +41,16 @@ class Http(Flask):
         # 初始化flask扩展
         db.init_app(self)
         migrate.init_app(self, db=db, directory="internal/migration")
-        # 解决前后端跨域问题
+
+        # # 解决前后端跨域问题
         CORS(self, resources={
             r"/*": {
-                "origins": "*",
-                "supports_credentials": True,
-                # 以下配置可以不设置，默认
-                "methods": ["GET", "POST"],
-                "allow_headers": ["Content-Type"],
+                "origins": ["http://localhost:5173"],
+                "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                "allow_headers": ["Content-Type"]
             }
         })
+
         with self.app_context():
             _ = App()
             db.create_all()
