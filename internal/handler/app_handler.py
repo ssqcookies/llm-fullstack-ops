@@ -7,19 +7,25 @@ import os
 import uuid
 from dataclasses import dataclass
 from operator import itemgetter
+from typing import Dict, Any
 
 from injector import inject
 from langchain.memory import ConversationBufferWindowMemory
 from langchain_community.chat_message_histories import FileChatMessageHistory
+from langchain_core.memory import BaseMemory
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.runnables import RunnablePassthrough, RunnableLambda
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda, RunnableConfig
+from langchain_core.tracers import Run
 from langchain_openai import ChatOpenAI
 
 from internal.exception import ValidationException, FailException
 from internal.schema.app_schema import KimiForm
 from internal.service import AppService
 from pkg.response import success_resp, success_message
+
+# 会话内存映射池【学习使用，生产环境替换为Redis持久映射】
+SESSION_MEM_MAP: Dict[str, BaseMemory] = {}
 
 
 @inject
@@ -49,6 +55,28 @@ class AppHandler:
         raise FailException("数据未找到")
         # return "pong"
 
+    @classmethod
+    def _load_memory_variables(cls, input: Dict[str, Any], config: RunnableConfig) -> Dict[str, Any]:
+        """加载记忆变量信息"""
+        # 从config中获取configurable
+        configurable = config.get("configurable", {})
+        # configurable_memory = configurable.get("memory", None)
+        session_id = configurable.get("session_id", None)
+        configurable_memory = SESSION_MEM_MAP.get(session_id)
+        if configurable_memory is not None and isinstance(configurable_memory, BaseMemory):
+            return configurable_memory.load_memory_variables(input)
+        return {"history": []}
+
+    @classmethod
+    def save_context(cls, run_obj: Run, config: RunnableConfig) -> None:
+        """存储对应的上下文信息到记忆实体中"""
+        configurable = config.get("configurable", {})
+        session_id = configurable.get("session_id", None)
+        configurable_memory = SESSION_MEM_MAP.get(session_id)
+        # configurable_memory = configurable.get("memory", None)
+        if configurable_memory is not None and isinstance(configurable_memory, BaseMemory):
+            configurable_memory.save_context(run_obj.inputs, run_obj.outputs)
+
     def completion(self, app_id: uuid.UUID):
         """聊天接口"""
         # 1 提取从接口中获取的输入，post
@@ -77,19 +105,45 @@ class AppHandler:
         # # 3. 包装JSON返回给前端
         # return success_resp({"content": ai_answer})
         query_content = req.query.data
+
+        # 生成会话标识，正式业务建议前端传入session_id区分聊天窗口
+
         # 创建prompt与记忆
         prompt = ChatPromptTemplate.from_messages([
             ("system", "你是一个强大的聊天机器人，能根据用户提问回复对应的问题"),
             MessagesPlaceholder("history"),
             ("human", "{query}")
         ])
-        memory = ConversationBufferWindowMemory(
-            k=3,
-            input_key="query",
-            output_key="output",
-            return_messages=True,
-            chat_memory=FileChatMessageHistory("./storage/memory/chat_history.txt")
-        )
+        # ==========改动重点==========
+        # 从请求体获取前端传来的session_id
+        session_id = app_id
+
+        # 不存在则新建
+        if not session_id:
+            session_id = str(uuid.uuid4())
+
+        # 去全局映射池查找memory
+        memory = SESSION_MEM_MAP.get(session_id)
+        # 找不到就创建新记忆实例
+        if memory is None:
+            memory = ConversationBufferWindowMemory(
+                k=3,
+                input_key="query",
+                output_key="output",
+                return_messages=True,
+                chat_memory=FileChatMessageHistory(f"./storage/memory/{session_id}.txt"),
+            )
+            SESSION_MEM_MAP[session_id] = memory
+        # ==========================
+        # memory = ConversationBufferWindowMemory(
+        #     k=3,
+        #     input_key="query",
+        #     output_key="output",
+        #     return_messages=True,
+        #     chat_memory=FileChatMessageHistory(f"./storage/memory/{session_id}.txt"),
+        # )
+        # # 将memory存入全局会话映射
+        # SESSION_MEM_MAP[session_id] = memory
 
         llm = ChatOpenAI(
             api_key=os.getenv("KIMI_API_KEY"),
@@ -98,14 +152,27 @@ class AppHandler:
             temperature=1
         )
 
-        chain = RunnablePassthrough.assign(
-            history=RunnableLambda(memory.load_memory_variables) | itemgetter("history")
-        ) | prompt | llm | StrOutputParser()
+        # chain = RunnablePassthrough.assign(
+        #     history=RunnableLambda(memory.load_memory_variables) | itemgetter("history")
+        # ) | prompt | llm | StrOutputParser()
+        chain = (RunnablePassthrough.assign(
+            history=RunnableLambda(self._load_memory_variables) | itemgetter("history")
+        ) | prompt | llm | StrOutputParser()).with_listeners(on_end=self.save_context)
 
         # 调用链生成内容
         chain_input = {"query": query_content}
-        content = chain.invoke(chain_input)
-        memory.save_context(chain_input, {"output": content})
+        # content = chain.invoke(chain_input)
+        # ❌ 0.2.x 禁止：往configurable传入对象实例，configurable 只允许存放可序列化基础类型（str /int/float /bool）
+        # 旧版 langchain - core：✅ 允许 configurable 存放任意 Python 对象（Memory 实例、类实例）
+        # content = chain.invoke(chain_input, config={"configurable": {"memory": memory}})
+        # ✅ 仅传递字符串session_id，不再传递对象，规避类型校验报错
+        # 构造配置
+        run_config: RunnableConfig = {
+            "configurable": {"session_id": session_id}
+        }
+        content = chain.invoke(chain_input, config=run_config)
+
+        # memory.save_context(chain_input, {"output": content})
 
         # 无记忆单次调用
         # prompt = ChatPromptTemplate.from_template("{query}")

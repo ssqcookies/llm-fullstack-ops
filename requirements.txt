@@ -18,17 +18,22 @@ langsmith>=0.1.17,<0.2.0
 langchain-openai==0.1.8
 langchain-community==0.2.1
 langchain-text-splitters==0.2.1
+langchain-weaviate==0.0.3
 
 # 向量库 & 知识库RAG依赖
 chromadb==0.5.6
 faiss-cpu==1.8.0.post1
 sentence-transformers==3.0.1
+numpy==1.26.4
+weaviate-client==4.22.0
+
 
 # 文档解析（PDF/Word/Markdown）
 PyPDF2==3.0.1
 python-docx==1.1.2
 markdown==3.7
 unstructured==0.15.13
+beautifulsoup4==4.15.0
 
 # 环境变量读取（加载.env里Kimi、智谱API Key）
 openai==1.109.1
