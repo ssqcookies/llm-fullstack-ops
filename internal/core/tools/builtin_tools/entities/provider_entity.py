@@ -7,9 +7,9 @@ import os.path
 from typing import Any
 
 import yaml
-from internal.lib.helper import dynamic_import
 from pydantic import BaseModel, Field
 
+from internal.lib.helper import dynamic_import
 from .tool_entity import ToolEntity
 
 
@@ -36,6 +36,9 @@ class Provider(BaseModel):
         """构造函数，完成对应服务提供商的初始化"""
         super().__init__(**kwargs)
         self._provider_init()
+
+    class Config:
+        protected_namespaces = ()
 
     def get_tool(self, tool_name: str) -> Any:
         """根据工具的名字，来获取到该服务提供商下的指定工具"""

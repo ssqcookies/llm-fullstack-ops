@@ -3,6 +3,9 @@
 @Author     :240227206@qq.com
 @File       :google_serper.py
 """
+import dotenv
+
+dotenv.load_dotenv()
 from langchain_community.tools import GoogleSerperRun
 from langchain_community.utilities import GoogleSerperAPIWrapper
 from langchain_core.pydantic_v1 import BaseModel, Field

@@ -19,7 +19,8 @@ from langchain_core.runnables import RunnablePassthrough, RunnableLambda, Runnab
 from langchain_core.tracers import Run
 from langchain_openai import ChatOpenAI
 
-from internal.exception import ValidationException, FailException
+from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
+from internal.exception import ValidationException
 from internal.schema.app_schema import KimiForm
 from internal.service import AppService
 from pkg.response import success_resp, success_message
@@ -33,6 +34,7 @@ SESSION_MEM_MAP: Dict[str, BaseMemory] = {}
 class AppHandler:
     """应用控制器"""
     app_service: AppService
+    provider_factory: BuiltinProviderManager
 
     def create_app(self):
         """"调用服务创建新的app记录"""
@@ -52,8 +54,11 @@ class AppHandler:
         return success_message(f"应用已经成功删除，id为{app.id}")
 
     def ping(self):
-        raise FailException("数据未找到")
-        # return "pong"
+        google_serper = self.provider_factory.get_tool("google", "google_serper")()
+        # raise FailException("数据未找到")
+        print(google_serper)
+        print(google_serper.invoke("2024年北京半程马拉松的前3名成绩是多少"))
+        return "pong"
 
     @classmethod
     def _load_memory_variables(cls, input: Dict[str, Any], config: RunnableConfig) -> Dict[str, Any]:
