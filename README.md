@@ -54,7 +54,7 @@ llm-fullstack-ops/
 |	|	├──prompt
 |	|	├──model_runtime
 |	|	├──moderation
-|	|	├──tool
+|	|	├──tools            //插件工具
 |	|	├──vector_store
 |	|	└──...
 |   ├──exception            // 通用公共异常目录

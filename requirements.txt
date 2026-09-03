@@ -39,13 +39,14 @@ beautifulsoup4==4.15.0
 openai==1.109.1
 python-dotenv==1.2.2
 
-# HTTP请求、数据处理
+# HTTP请求
 requests==2.34.2
-pydantic==2.8.2
-pydantic-settings==2.4.0
+# 数据验证
+pydantic==2.13.4
 
 # 工具类
 python-multipart==0.0.9
 loguru==0.7.2
 SQLAlchemy==2.0.32
 pytest==9.1.1
+marshmallow==3.26.2
