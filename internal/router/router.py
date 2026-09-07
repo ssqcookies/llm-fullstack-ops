@@ -6,7 +6,8 @@ from injector import inject
 from internal.handler import (
     AppHandler,
     BuiltinToolHandler,
-    ApiToolHandler
+    ApiToolHandler,
+    UploadFileHandler
 )
 
 
@@ -17,6 +18,7 @@ class Router:
     app_handler: AppHandler  # 仅声明字段，自动生成构造器
     builtin_tool_handler: BuiltinToolHandler
     api_tool_handler: ApiToolHandler
+    upload_file_handler: UploadFileHandler
 
     # @dataclass Python3.7+ 内置 数据类装饰器，简化类样板代码：
     # 自动根据类属性 app_handler: AppHandler 生成 __init__ 构造方法
@@ -57,10 +59,10 @@ class Router:
         )
 
         # 4.自定义API插件模块
-        # bp.add_url_rule(
-        #     "/api-tools",
-        #     view_func=self.api_tool_handler.get_api_tool_providers_with_page,
-        # )
+        bp.add_url_rule(
+            "/api-tools",
+            view_func=self.api_tool_handler.get_api_tool_providers_with_page,
+        )
         bp.add_url_rule(
             "/api-tools/validate-openapi-schema",
             methods=["POST", "OPTIONS"],
@@ -89,5 +91,9 @@ class Router:
             methods=["POST"],
             view_func=self.api_tool_handler.delete_api_tool_provider,
         )
+        # 4.上传文件模块
+        bp.add_url_rule("/upload-files/file", methods=["POST"], view_func=self.upload_file_handler.upload_file)
+        bp.add_url_rule("/upload-files/image", methods=["POST"], view_func=self.upload_file_handler.upload_image)
+
         # 3 在应用上注册蓝图
         app.register_blueprint(bp)

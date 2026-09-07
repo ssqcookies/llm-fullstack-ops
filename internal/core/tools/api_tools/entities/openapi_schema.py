@@ -28,11 +28,11 @@ ParameterTypeMap = {
 
 class ParameterIn(str, Enum):
     """参数支持存放的位置"""
-    PATH: str
-    QUERY: str
-    HEADER: str
-    COOKIE: str
-    REQUEST_BODY: str
+    PATH = "path"
+    QUERY = "query"
+    HEADER = "header"
+    COOKIE = "cookie"
+    REQUEST_BODY = "request_body"
 
 
 class OpenAPISchema(BaseModel):

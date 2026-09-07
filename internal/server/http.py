@@ -12,6 +12,7 @@ from flask_migrate import Migrate
 
 from config.config import Config
 from internal.exception import CustomException
+from internal.extension import logging_extension, redis_extension
 from internal.model import App
 from internal.router import Router
 from pkg.response import json, Response, ResponseCode
@@ -38,9 +39,12 @@ class Http(Flask):
 
         # 添加校验规则
         self.config.from_object(conf)
+
         # 初始化flask扩展
         db.init_app(self)
         migrate.init_app(self, db=db, directory="internal/migration")
+        logging_extension.init_app(self)
+        redis_extension.init_app(self)
 
         # # 解决前后端跨域问题
         CORS(self, resources={
