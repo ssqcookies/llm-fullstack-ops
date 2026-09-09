@@ -7,22 +7,30 @@ import os
 import uuid
 from dataclasses import dataclass
 from operator import itemgetter
-from typing import Dict, Any
+from typing import Dict, Any, Generator
+from uuid import UUID
 
 from injector import inject
 from langchain.memory import ConversationBufferWindowMemory
 from langchain_community.chat_message_histories import FileChatMessageHistory
+from langchain_core.documents import Document
 from langchain_core.memory import BaseMemory
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda, RunnableConfig
 from langchain_core.tracers import Run
 from langchain_openai import ChatOpenAI
+from redis import Redis
 
+from internal.core.agent.agents import FunctionCallAgent, AgentQueueManager
+from internal.core.agent.entities.agent_entity import AgentConfig
+from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
+from internal.entity.conversation_entity import InvokeFrom
 from internal.exception import ValidationException
-from internal.schema.app_schema import KimiForm
-from internal.service import AppService
-from pkg.response import success_resp, success_message
+from internal.schema.app_schema import CompletionReq
+from internal.service import AppService, VectorDatabaseService, ApiToolService, EmbeddingsService, ConversationService
+from internal.task.demo_task import demo_task
+from pkg.response import success_resp, success_message, validation_resp, compact_generate_response
 
 # 会话内存映射池【学习使用，生产环境替换为Redis持久映射】
 SESSION_MEM_MAP: Dict[str, BaseMemory] = {}
@@ -33,6 +41,12 @@ SESSION_MEM_MAP: Dict[str, BaseMemory] = {}
 class AppHandler:
     """应用控制器"""
     app_service: AppService
+    vector_database_service: VectorDatabaseService
+    api_tool_service: ApiToolService
+    embeddings_service: EmbeddingsService
+    builtin_provider_manager: BuiltinProviderManager
+    conversation_service: ConversationService
+    redis_client: Redis
 
     def create_app(self):
         """"调用服务创建新的app记录"""
@@ -54,6 +68,7 @@ class AppHandler:
     def ping(self):
         # google_serper = self.provider_factory.get_tool("google", "google_serper")()
         # # raise FailException("数据未找到")
+        demo_task.delay(uuid.uuid4())
         return "pong"
 
     @classmethod
@@ -78,11 +93,75 @@ class AppHandler:
         if configurable_memory is not None and isinstance(configurable_memory, BaseMemory):
             configurable_memory.save_context(run_obj.inputs, run_obj.outputs)
 
+    def debug(self, app_id: UUID):
+        """应用会话调试聊天接口，该接口为流式事件输出"""
+        # 1.提取从接口中获取的输入，POST
+        req = CompletionReq()
+        if not req.validate():
+            return validation_resp(req.errors)
+
+        # 2.定义工具列表
+        tools = [
+            self.builtin_provider_manager.get_tool("google", "google_serper")(),
+            self.builtin_provider_manager.get_tool("gaode", "gaode_weather")()
+        ]
+
+        agent = FunctionCallAgent(
+            AgentConfig(
+                llm=ChatOpenAI(model="gpt-4o-mini"),
+                enable_long_term_memory=True,
+                tools=tools,
+            ),
+            AgentQueueManager(
+                user_id=uuid.uuid4(),
+                task_id=uuid.uuid4(),
+                invoke_from=InvokeFrom.DEBUGGER,
+                redis_client=self.redis_client,
+            )
+        )
+
+        def stream_event_response() -> Generator:
+            """流式事件输出响应"""
+            for agent_queue_event in agent.run(req.query.data, [], "用户介绍自己叫慕小课"):
+                data = {
+                    "id": str(agent_queue_event.id),
+                    "task_id": str(agent_queue_event.task_id),
+                    "event": agent_queue_event.event,
+                    "thought": agent_queue_event.thought,
+                    "observation": agent_queue_event.observation,
+                    "tool": agent_queue_event.tool,
+                    "tool_input": agent_queue_event.tool_input,
+                    "answer": agent_queue_event.answer,
+                    "latency": agent_queue_event.latency
+                }
+                yield f"event: {agent_queue_event.event}\ndata: {json.dumps(data)}\n\n"
+
+        return compact_generate_response(stream_event_response())
+
+    @classmethod
+    def _combine_documents(cls, documents: list[Document]) -> str:
+        """将传入的文档列表合并成字符串"""
+        return "\n\n".join([document.page_content for document in documents])
+
+    def ping(self):
+        from internal.core.agent.agents import FunctionCallAgent
+        from internal.core.agent.entities.agent_entity import AgentConfig
+        from langchain_openai import ChatOpenAI
+
+        agent = FunctionCallAgent(AgentConfig(
+            llm=ChatOpenAI(model="gpt-4o-mini"),
+            preset_prompt="你是一个拥有20年经验的诗人，请根据用户提供的主题来写一首诗"
+        ))
+        state = agent.run("程序员", [], "")
+        content = state["messages"][-1].content
+
+        return success_resp({"content": content})
+
     def completion(self, app_id: uuid.UUID):
         """聊天接口"""
         # 1 提取从接口中获取的输入，post
         # query = request.json.get("query")
-        req = KimiForm()
+        req = CompletionReq()
         if not req.validate():
             raise ValidationException(req.errors)
 
@@ -176,6 +255,7 @@ class AppHandler:
         # memory.save_context(chain_input, {"output": content})
 
         # 无记忆单次调用
+
         # prompt = ChatPromptTemplate.from_template("{query}")
         # llm = ChatOpenAI(
         #     api_key=os.getenv("KIMI_API_KEY"),

@@ -10,6 +10,8 @@ injector==0.24.0
 Flask-SQLAlchemy==3.1.1
 psycopg2-binary==2.9.12
 Flask-Migrate==4.1.0
+SQLAlchemy==2.0.32
+
 
 # LLM 核心框架 LangChain
 langchain==0.2.1
@@ -19,6 +21,8 @@ langchain-openai==0.1.8
 langchain-community==0.2.1
 langchain-text-splitters==0.2.1
 langchain-weaviate==0.0.3
+langgraph==0.1.19
+
 
 # 向量库 & 知识库RAG依赖
 chromadb==0.5.6
@@ -26,7 +30,6 @@ faiss-cpu==1.8.0.post1
 sentence-transformers==3.0.1
 numpy==1.26.4
 weaviate-client==4.22.0
-
 
 # 文档解析（PDF/Word/Markdown）
 PyPDF2==3.0.1
@@ -50,9 +53,11 @@ pydantic==2.13.4
 # 工具类
 python-multipart==0.0.9
 loguru==0.7.2
-SQLAlchemy==2.0.32
+
 pytest==9.1.1
 marshmallow==3.26.2
-
+jieba==0.42.1
 
 redis==8.1.0
+celery==5.6.3
+eventlet==0.41.2

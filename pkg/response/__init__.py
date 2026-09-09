@@ -8,13 +8,15 @@ from .http_code import ResponseCode
 from .response import (
     Response,
     json, success_resp, fail_resp, validation_resp,
-    message, success_message, fail_message, not_found_message, unauthorized_message, forbidden_message
+    message, success_message, fail_message, not_found_message, unauthorized_message, forbidden_message,
+    compact_generate_response
 )
 
 __all__ = [
     "Response",
     "ResponseCode",
     "json", "success_resp", "fail_resp", "validation_resp",
-    "message", "success_message", "fail_message", "forbidden_message", "unauthorized_message", "not_found_message"
+    "message", "success_message", "fail_message", "forbidden_message", "unauthorized_message", "not_found_message",
+    "compact_generate_response"
 
 ]

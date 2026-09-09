@@ -2,7 +2,7 @@
 DEFAULT_CONFIG = {
     # 开发环境关闭wtf的csrf保护
     "WTF_CSRF_ENABLED": "False",
-    
+
     # SQLAlchemy 数据库配置
     "SQLALCHEMY_DATABASE_URI": "",
     "SQLALCHEMY_POOL_SIZE": 30,
@@ -16,4 +16,11 @@ DEFAULT_CONFIG = {
     "REDIS_PASSWORD": "",
     "REDIS_DB": 0,
     "REDIS_USE_SSL": "False",
+
+    # Celery默认配置
+    "CELERY_BROKER_DB": 1,
+    "CELERY_RESULT_BACKEND_DB": 1,
+    "CELERY_TASK_IGNORE_RESULT": "False",
+    "CELERY_RESULT_EXPIRES": 3600,
+    "CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP": "True",
 }

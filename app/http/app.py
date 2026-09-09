@@ -28,6 +28,23 @@ app = Http(
     migrate=injector.get(Migrate),
     router=injector.get(Router)
 )
+
+celery = app.extensions["celery"]
+
+import atexit
+
+
+@atexit.register
+def close_weaviate():
+    """程序退出时关闭 Weaviate 连接"""
+    try:
+        from internal.service import VectorDatabaseService
+        vector_db_service = injector.get(VectorDatabaseService)
+        vector_db_service.close()
+    except Exception:
+        pass
+
+
 # 3. 启动web服务
 if __name__ == "__main__":
     app.run(debug=True)
