@@ -81,7 +81,7 @@ class CosService:
 
         if not cos_domain:
             bucket = os.getenv("COS_BUCKET")
-            scheme = os.getenv("COS_SCHEME")
+            scheme = os.getenv("COS_SCHEME", "https")
             region = os.getenv("COS_REGION")
             cos_domain = f"{scheme}://{bucket}.cos.{region}.myqcloud.com"
 

@@ -22,6 +22,7 @@ class TokenBufferMemory:
     conversation: Conversation  # 会话模型
     model_instance: BaseLanguageModel  # LLM大语言模型
 
+    # 大模型上下文长度 = 预设提示词长度+短期记忆的长度+长期记忆的长度+用户原始提问query的长度+工具调用/知识库检索占用的长度+大模型剩余可以生成的长度
     def get_history_prompt_messages(
             self,
             max_token_limit: int = 2000,

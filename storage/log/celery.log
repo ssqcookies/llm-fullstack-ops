@@ -46,3 +46,389 @@ Trying again in 30.00 seconds... (15/100)
 [2026-09-07 23:59:34,483: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
 Trying again in 32.00 seconds... (16/100)
 
+[2026-09-10 20:01:10,960: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 2.00 seconds... (1/100)
+
+[2026-09-10 20:01:12,973: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 4.00 seconds... (2/100)
+
+[2026-09-10 20:01:16,998: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 6.00 seconds... (3/100)
+
+[2026-09-10 20:01:23,036: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 8.00 seconds... (4/100)
+
+[2026-09-10 20:01:31,077: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 10.00 seconds... (5/100)
+
+[2026-09-10 20:01:41,118: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 12.00 seconds... (6/100)
+
+[2026-09-10 20:01:53,174: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 14.00 seconds... (7/100)
+
+[2026-09-10 20:02:07,233: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 16.00 seconds... (8/100)
+
+[2026-09-10 20:02:23,308: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 18.00 seconds... (9/100)
+
+[2026-09-10 20:02:41,387: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 20.00 seconds... (10/100)
+
+[2026-09-10 20:03:01,480: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 22.00 seconds... (11/100)
+
+[2026-09-10 20:03:23,575: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 24.00 seconds... (12/100)
+
+[2026-09-10 20:03:47,676: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 61 connecting to localhost:6379. ECONNREFUSED..
+Trying again in 26.00 seconds... (13/100)
+
+[2026-09-10 20:03:50,746: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-09-10 20:03:50,761: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-09-10 20:03:50,788: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/eventlet/support/greendns.py:379: DeprecationWarning: please use dns.resolver.Resolver.resolve() instead
+  a = fun(*args, **kwargs)
+
+[2026-09-10 20:03:51,061: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-09-10 20:03:51,222: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 20:03:51,226: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:14:10,408: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-09-10 22:14:10,414: INFO/MainProcess] mingle: searching for neighbors
+[2026-09-10 22:14:11,452: INFO/MainProcess] mingle: all alone
+[2026-09-10 22:14:11,475: INFO/MainProcess] pidbox: Connected to redis://localhost:6379/1.
+[2026-09-10 22:14:11,490: INFO/MainProcess] celery@192.168.5.3 ready.
+[2026-09-10 22:14:41,188: INFO/MainProcess] Task internal.task.document_task.build_documents[2dd66673-6537-4717-aaad-9aa61419ab5e] received
+[2026-09-10 22:14:41,264: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-09-10 22:14:41,279: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-09-10 22:14:41,387: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/eventlet/support/greendns.py:379: DeprecationWarning: please use dns.resolver.Resolver.resolve() instead
+  a = fun(*args, **kwargs)
+
+[2026-09-10 22:14:41,738: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-09-10 22:14:41,977: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:14:41,981: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:14:42,045: INFO/MainProcess] select pg_catalog.version()
+[2026-09-10 22:14:42,046: INFO/MainProcess] [raw sql] {}
+[2026-09-10 22:14:42,047: INFO/MainProcess] select current_schema()
+[2026-09-10 22:14:42,047: INFO/MainProcess] [raw sql] {}
+[2026-09-10 22:14:42,048: INFO/MainProcess] show standard_conforming_strings
+[2026-09-10 22:14:42,048: INFO/MainProcess] [raw sql] {}
+[2026-09-10 22:14:42,049: INFO/MainProcess] BEGIN (implicit)
+[2026-09-10 22:14:42,053: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id IN (%(id_1_1)s::UUID)
+[2026-09-10 22:14:42,053: INFO/MainProcess] [generated in 0.00026s] {'id_1_1': UUID('e52f79cc-ad9b-46ca-9a5d-83d004dacad7')}
+[2026-09-10 22:14:42,057: INFO/MainProcess] UPDATE document SET processing_started_at=%(processing_started_at)s, status=%(status)s WHERE document.id = %(document_id)s::UUID
+[2026-09-10 22:14:42,057: INFO/MainProcess] [generated in 0.00013s] {'processing_started_at': datetime.datetime(2026, 9, 10, 22, 14, 42, 55713), 'status': <DocumentStatus.PARSING: 'parsing'>, 'document_id': UUID('e52f79cc-ad9b-46ca-9a5d-83d004dacad7')}
+[2026-09-10 22:14:42,061: INFO/MainProcess] COMMIT
+[2026-09-10 22:14:42,062: INFO/MainProcess] BEGIN (implicit)
+[2026-09-10 22:14:42,063: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID
+[2026-09-10 22:14:42,063: INFO/MainProcess] [generated in 0.00011s] {'pk_1': UUID('e52f79cc-ad9b-46ca-9a5d-83d004dacad7')}
+[2026-09-10 22:14:42,065: INFO/MainProcess] SELECT upload_file.id AS upload_file_id, upload_file.account_id AS upload_file_account_id, upload_file.name AS upload_file_name, upload_file.key AS upload_file_key, upload_file.size AS upload_file_size, upload_file.extension AS upload_file_extension, upload_file.mime_type AS upload_file_mime_type, upload_file.hash AS upload_file_hash, upload_file.updated_at AS upload_file_updated_at, upload_file.created_at AS upload_file_created_at 
+FROM upload_file 
+WHERE upload_file.id = %(id_1)s::UUID
+[2026-09-10 22:14:42,065: INFO/MainProcess] [generated in 0.00011s] {'id_1': UUID('00e0d90a-ae89-4295-9d08-ba93308ee9e3')}
+[2026-09-10 22:14:42,067: INFO/MainProcess] head object, url=:https://llmops-1482678455.cos.ap-shanghai.myqcloud.com/2026/09/10/d19a8b0c-9c16-491c-8419-a9d301ff4288.docx ,headers=:{}
+[2026-09-10 22:14:42,389: INFO/MainProcess] get object, url=:https://llmops-1482678455.cos.ap-shanghai.myqcloud.com/2026/09/10/d19a8b0c-9c16-491c-8419-a9d301ff4288.docx ,headers=:{}, params=:{}
+[2026-09-10 22:14:42,503: ERROR/MainProcess] 构建文档发生错误，错误信息：unstructured package not found, please install it with `pip install unstructured`
+Traceback (most recent call last):
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_community/document_loaders/unstructured.py", line 49, in __init__
+    import unstructured  # noqa:F401
+    ^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'unstructured'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/service/indexing_service.py", line 66, in build_documents
+    lc_documents = self._parsing(document)
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/service/indexing_service.py", line 207, in _parsing
+    lc_documents = self.file_extractor.load(upload_file, False, True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/core/file_extractor/file_extractor.py", line 53, in load
+    return self.load_from_file(file_path, return_text, is_unstructured)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/core/file_extractor/file_extractor.py", line 98, in load_from_file
+    loader = UnstructuredFileLoader(file_path) if is_unstructured else TextLoader(file_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_community/document_loaders/unstructured.py", line 165, in __init__
+    super().__init__(mode=mode, **unstructured_kwargs)
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_community/document_loaders/unstructured.py", line 51, in __init__
+    raise ImportError(
+ImportError: unstructured package not found, please install it with `pip install unstructured`
+[2026-09-10 22:14:42,508: INFO/MainProcess] UPDATE document SET stopped_at=%(stopped_at)s, error=%(error)s, status=%(status)s WHERE document.id = %(document_id)s::UUID
+[2026-09-10 22:14:42,508: INFO/MainProcess] [generated in 0.00023s] {'stopped_at': datetime.datetime(2026, 9, 10, 22, 14, 42, 507514), 'error': 'unstructured package not found, please install it with `pip install unstructured`', 'status': <DocumentStatus.ERROR: 'error'>, 'document_id': UUID('e52f79cc-ad9b-46ca-9a5d-83d004dacad7')}
+[2026-09-10 22:14:42,510: INFO/MainProcess] COMMIT
+[2026-09-10 22:14:42,537: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/celery/backends/redis.py:434: DeprecationWarning: Call to deprecated setex. (Use 'set' instead.) -- Deprecated since version 2.6.12.
+  pipe.setex(key, self.expires, value)
+
+[2026-09-10 22:14:42,538: INFO/MainProcess] Task internal.task.document_task.build_documents[2dd66673-6537-4717-aaad-9aa61419ab5e] succeeded in 1.3473637079587206s: None
+[2026-09-10 22:26:34,707: INFO/MainProcess] Task internal.task.document_task.delete_document[19a1c2ec-fdd8-4193-ae56-39ace29df51f] received
+[2026-09-10 22:26:34,797: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-09-10 22:26:34,806: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-09-10 22:26:35,329: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-09-10 22:26:36,316: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:26:36,319: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:26:36,327: INFO/MainProcess] BEGIN (implicit)
+[2026-09-10 22:26:36,331: INFO/MainProcess] SELECT segment.id AS segment_id 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID
+[2026-09-10 22:26:36,331: INFO/MainProcess] [generated in 0.00115s] {'document_id_1': UUID('e52f79cc-ad9b-46ca-9a5d-83d004dacad7')}
+[2026-09-10 22:26:36,398: INFO/MainProcess] ROLLBACK
+[2026-09-10 22:26:36,428: ERROR/MainProcess] Task internal.task.document_task.delete_document[19a1c2ec-fdd8-4193-ae56-39ace29df51f] raised unexpected: WeaviateDeleteManyError("Query call with protocol GRPC delete failed with message batch delete params: no such prop with name 'document_id' found in class 'Dataset' in the schema. Check your schema files for which properties in this class are available.")
+Traceback (most recent call last):
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/connect/v4.py", line 1045, in grpc_batch_delete
+    self.grpc_stub.BatchDelete(
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/grpc/_channel.py", line 1159, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/grpc/_channel.py", line 990, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNKNOWN
+	details = "batch delete params: no such prop with name 'document_id' found in class 'Dataset' in the schema. Check your schema files for which properties in this class are available"
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"batch delete params: no such prop with name \'document_id\' found in class \'Dataset\' in the schema. Check your schema files for which properties in this class are available", grpc_status:2}"
+>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/celery/app/trace.py", line 585, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/extension/celery_extension.py", line 18, in __call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/task/document_task.py", line 39, in delete_document
+    indexing_service.delete_document(dataset_id, document_id)
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/service/indexing_service.py", line 159, in delete_document
+    collection.data.delete_many(
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/collections/data/executor.py", line 644, in delete_many
+    return self.__batch_delete.batch_delete(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/collections/batch/grpc_batch_delete.py", line 71, in batch_delete
+    return executor.execute(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/connect/executor.py", line 99, in execute
+    return cast(T, exception_callback(e))
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/connect/executor.py", line 38, in raise_exception
+    raise e
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/connect/executor.py", line 80, in execute
+    call = method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/connect/v4.py", line 1055, in grpc_batch_delete
+    raise WeaviateDeleteManyError(str(error.details()))
+weaviate.exceptions.WeaviateDeleteManyError: Query call with protocol GRPC delete failed with message batch delete params: no such prop with name 'document_id' found in class 'Dataset' in the schema. Check your schema files for which properties in this class are available.
+[2026-09-10 22:28:36,264: INFO/MainProcess] Task internal.task.document_task.build_documents[63afa473-dde7-4277-8c24-e941313f5305] received
+[2026-09-10 22:28:36,319: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-09-10 22:28:36,336: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-09-10 22:28:36,343: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/warnings.py:312: ResourceWarning: Con004: The connection to Weaviate was not closed properly. This can lead to memory leaks.
+            Please make sure to close the connection using `client.close()`.
+  warnings.warn(
+
+[2026-09-10 22:28:36,854: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-09-10 22:28:37,220: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:28:37,222: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:28:37,226: INFO/MainProcess] BEGIN (implicit)
+[2026-09-10 22:28:37,228: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id IN (%(id_1_1)s::UUID)
+[2026-09-10 22:28:37,232: INFO/MainProcess] [cached since 835.2s ago] {'id_1_1': UUID('eaa90517-1292-4f0e-b5d5-ac1c1ddec2e4')}
+[2026-09-10 22:28:37,244: INFO/MainProcess] UPDATE document SET processing_started_at=%(processing_started_at)s, status=%(status)s WHERE document.id = %(document_id)s::UUID
+[2026-09-10 22:28:37,244: INFO/MainProcess] [cached since 835.2s ago] {'processing_started_at': datetime.datetime(2026, 9, 10, 22, 28, 37, 243684), 'status': <DocumentStatus.PARSING: 'parsing'>, 'document_id': UUID('eaa90517-1292-4f0e-b5d5-ac1c1ddec2e4')}
+[2026-09-10 22:28:37,248: INFO/MainProcess] COMMIT
+[2026-09-10 22:28:37,251: INFO/MainProcess] BEGIN (implicit)
+[2026-09-10 22:28:37,251: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID
+[2026-09-10 22:28:37,252: INFO/MainProcess] [cached since 835.2s ago] {'pk_1': UUID('eaa90517-1292-4f0e-b5d5-ac1c1ddec2e4')}
+[2026-09-10 22:28:37,254: INFO/MainProcess] SELECT upload_file.id AS upload_file_id, upload_file.account_id AS upload_file_account_id, upload_file.name AS upload_file_name, upload_file.key AS upload_file_key, upload_file.size AS upload_file_size, upload_file.extension AS upload_file_extension, upload_file.mime_type AS upload_file_mime_type, upload_file.hash AS upload_file_hash, upload_file.updated_at AS upload_file_updated_at, upload_file.created_at AS upload_file_created_at 
+FROM upload_file 
+WHERE upload_file.id = %(id_1)s::UUID
+[2026-09-10 22:28:37,254: INFO/MainProcess] [cached since 835.2s ago] {'id_1': UUID('f74824ae-e276-4599-84e9-30b696f5133f')}
+[2026-09-10 22:28:37,256: INFO/MainProcess] head object, url=:https://llmops-1482678455.cos.ap-shanghai.myqcloud.com/2026/09/10/56d60dc3-c34f-477d-8313-e20eb472537f.docx ,headers=:{}
+[2026-09-10 22:28:37,420: INFO/MainProcess] get object, url=:https://llmops-1482678455.cos.ap-shanghai.myqcloud.com/2026/09/10/56d60dc3-c34f-477d-8313-e20eb472537f.docx ,headers=:{}, params=:{}
+[2026-09-10 22:28:37,952: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/eventlet/support/greendns.py:379: DeprecationWarning: please use dns.resolver.Resolver.resolve() instead
+  a = fun(*args, **kwargs)
+
+[2026-09-10 22:29:00,513: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/torch/_subclasses/functional_tensor.py:368: UserWarning: Failed to initialize NumPy: module 'numpy._globals' has no attribute '_signature_descriptor' (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+
+[2026-09-10 22:29:02,152: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/eventlet/support/greendns.py:379: DeprecationWarning: please use dns.resolver.Resolver.resolve() instead
+  a = fun(*args, **kwargs)
+
+[2026-09-10 22:29:02,153: ERROR/MainProcess] 构建文档发生错误，错误信息：numpy.core.multiarray failed to import (auto-generated because you didn't call 'numpy.import_array()' after cimporting numpy; use '<void>numpy._import_array' to disable if you are certain you don't need it).
+Traceback (most recent call last):
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/service/indexing_service.py", line 66, in build_documents
+    lc_documents = self._parsing(document)
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/service/indexing_service.py", line 207, in _parsing
+    lc_documents = self.file_extractor.load(upload_file, False, True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/core/file_extractor/file_extractor.py", line 53, in load
+    return self.load_from_file(file_path, return_text, is_unstructured)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/core/file_extractor/file_extractor.py", line 101, in load_from_file
+    return delimiter.join([document.page_content for document in loader.load()]) if return_text else loader.load()
+                                                                                                     ^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_core/document_loaders/base.py", line 30, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_community/document_loaders/unstructured.py", line 88, in lazy_load
+    elements = self._get_elements()
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_community/document_loaders/unstructured.py", line 180, in _get_elements
+    return partition(filename=self.file_path, **self.unstructured_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/telemetry.py", line 192, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/auto.py", line 291, in partition
+    partition = partitioner_loader.get(file_type)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/auto.py", line 364, in get
+    self._partitioners[file_type] = self._load_partitioner(file_type)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/auto.py", line 382, in _load_partitioner
+    partitioner_module = importlib.import_module(file_type.partitioner_module_qname)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/docx.py", line 49, in <module>
+    from unstructured.partition.text_type import (
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/text_type.py", line 20, in <module>
+    from unstructured.nlp.tokenize import pos_tag, sent_tokenize, word_tokenize
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/nlp/tokenize.py", line 16, in <module>
+    import spacy
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/spacy/__init__.py", line 6, in <module>
+    from .errors import setup_default_warnings
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/spacy/errors.py", line 3, in <module>
+    from .compat import Literal
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/spacy/compat.py", line 42, in <module>
+    from thinc.api import Optimizer  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/thinc/api.py", line 1, in <module>
+    from .backends import (
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/thinc/backends/__init__.py", line 17, in <module>
+    from .cupy_ops import CupyOps
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/thinc/backends/cupy_ops.py", line 16, in <module>
+    from .numpy_ops import NumpyOps
+  File "thinc/backends/numpy_ops.pyx", line 1, in init thinc.backends.numpy_ops
+ImportError: numpy.core.multiarray failed to import (auto-generated because you didn't call 'numpy.import_array()' after cimporting numpy; use '<void>numpy._import_array' to disable if you are certain you don't need it).
+[2026-09-10 22:29:02,163: INFO/MainProcess] UPDATE document SET stopped_at=%(stopped_at)s, error=%(error)s, status=%(status)s WHERE document.id = %(document_id)s::UUID
+[2026-09-10 22:29:02,163: INFO/MainProcess] [cached since 859.6s ago] {'stopped_at': datetime.datetime(2026, 9, 10, 22, 29, 2, 158639), 'error': "numpy.core.multiarray failed to import (auto-generated because you didn't call 'numpy.import_array()' after cimporting numpy; use '<void>numpy._import_array' to disable if you are certain you don't need it).", 'status': <DocumentStatus.ERROR: 'error'>, 'document_id': UUID('eaa90517-1292-4f0e-b5d5-ac1c1ddec2e4')}
+[2026-09-10 22:29:02,173: INFO/MainProcess] COMMIT
+[2026-09-10 22:29:02,204: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/celery/backends/redis.py:434: DeprecationWarning: Call to deprecated setex. (Use 'set' instead.) -- Deprecated since version 2.6.12.
+  pipe.setex(key, self.expires, value)
+
+[2026-09-10 22:29:02,205: INFO/MainProcess] Task internal.task.document_task.build_documents[63afa473-dde7-4277-8c24-e941313f5305] succeeded in 25.93781166698318s: None
+[2026-09-10 22:36:46,453: INFO/MainProcess] Task internal.task.document_task.build_documents[346c2386-042c-4ff6-8ddd-d33d4f006b10] received
+[2026-09-10 22:36:46,503: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-09-10 22:36:46,516: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-09-10 22:36:50,121: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-09-10 22:36:50,210: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:36:50,216: INFO/MainProcess] HTTP Request: GET http://127.0.0.1:8080/v1/schema/Dataset "HTTP/1.1 200 OK"
+[2026-09-10 22:36:50,226: INFO/MainProcess] BEGIN (implicit)
+[2026-09-10 22:36:50,227: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id IN (%(id_1_1)s::UUID)
+[2026-09-10 22:36:50,233: INFO/MainProcess] [cached since 1328s ago] {'id_1_1': UUID('e55e255a-040a-4b56-8ff7-cbc29e5e578c')}
+[2026-09-10 22:36:50,238: INFO/MainProcess] UPDATE document SET processing_started_at=%(processing_started_at)s, status=%(status)s WHERE document.id = %(document_id)s::UUID
+[2026-09-10 22:36:50,238: INFO/MainProcess] [cached since 1328s ago] {'processing_started_at': datetime.datetime(2026, 9, 10, 22, 36, 50, 237723), 'status': <DocumentStatus.PARSING: 'parsing'>, 'document_id': UUID('e55e255a-040a-4b56-8ff7-cbc29e5e578c')}
+[2026-09-10 22:36:50,240: INFO/MainProcess] COMMIT
+[2026-09-10 22:36:50,242: INFO/MainProcess] BEGIN (implicit)
+[2026-09-10 22:36:50,243: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID
+[2026-09-10 22:36:50,243: INFO/MainProcess] [cached since 1328s ago] {'pk_1': UUID('e55e255a-040a-4b56-8ff7-cbc29e5e578c')}
+[2026-09-10 22:36:50,245: INFO/MainProcess] SELECT upload_file.id AS upload_file_id, upload_file.account_id AS upload_file_account_id, upload_file.name AS upload_file_name, upload_file.key AS upload_file_key, upload_file.size AS upload_file_size, upload_file.extension AS upload_file_extension, upload_file.mime_type AS upload_file_mime_type, upload_file.hash AS upload_file_hash, upload_file.updated_at AS upload_file_updated_at, upload_file.created_at AS upload_file_created_at 
+FROM upload_file 
+WHERE upload_file.id = %(id_1)s::UUID
+[2026-09-10 22:36:50,245: INFO/MainProcess] [cached since 1328s ago] {'id_1': UUID('8dd24e4c-e688-4e1e-9e0a-60408d43e0a0')}
+[2026-09-10 22:36:50,246: INFO/MainProcess] head object, url=:https://llmops-1482678455.cos.ap-shanghai.myqcloud.com/2026/09/10/1cbda0c6-30f7-4c18-83be-2c0f2b0f092b.docx ,headers=:{}
+[2026-09-10 22:36:50,420: INFO/MainProcess] get object, url=:https://llmops-1482678455.cos.ap-shanghai.myqcloud.com/2026/09/10/1cbda0c6-30f7-4c18-83be-2c0f2b0f092b.docx ,headers=:{}, params=:{}
+[2026-09-10 22:36:50,509: ERROR/MainProcess] 构建文档发生错误，错误信息：numpy.core.multiarray failed to import (auto-generated because you didn't call 'numpy.import_array()' after cimporting numpy; use '<void>numpy._import_array' to disable if you are certain you don't need it).
+Traceback (most recent call last):
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/service/indexing_service.py", line 66, in build_documents
+    lc_documents = self._parsing(document)
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/service/indexing_service.py", line 207, in _parsing
+    lc_documents = self.file_extractor.load(upload_file, False, True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/core/file_extractor/file_extractor.py", line 53, in load
+    return self.load_from_file(file_path, return_text, is_unstructured)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/Documents/GitHub/llm-fullstack-ops/internal/core/file_extractor/file_extractor.py", line 101, in load_from_file
+    return delimiter.join([document.page_content for document in loader.load()]) if return_text else loader.load()
+                                                                                                     ^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_core/document_loaders/base.py", line 30, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_community/document_loaders/unstructured.py", line 88, in lazy_load
+    elements = self._get_elements()
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/langchain_community/document_loaders/unstructured.py", line 180, in _get_elements
+    return partition(filename=self.file_path, **self.unstructured_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/telemetry.py", line 192, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/auto.py", line 291, in partition
+    partition = partitioner_loader.get(file_type)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/auto.py", line 364, in get
+    self._partitioners[file_type] = self._load_partitioner(file_type)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/auto.py", line 382, in _load_partitioner
+    partitioner_module = importlib.import_module(file_type.partitioner_module_qname)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/docx.py", line 49, in <module>
+    from unstructured.partition.text_type import (
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/partition/text_type.py", line 20, in <module>
+    from unstructured.nlp.tokenize import pos_tag, sent_tokenize, word_tokenize
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/unstructured/nlp/tokenize.py", line 16, in <module>
+    import spacy
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/spacy/__init__.py", line 6, in <module>
+    from .errors import setup_default_warnings
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/spacy/errors.py", line 3, in <module>
+    from .compat import Literal
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/spacy/compat.py", line 42, in <module>
+    from thinc.api import Optimizer  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/thinc/api.py", line 1, in <module>
+    from .backends import (
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/thinc/backends/__init__.py", line 17, in <module>
+    from .cupy_ops import CupyOps
+  File "/Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/thinc/backends/cupy_ops.py", line 16, in <module>
+    from .numpy_ops import NumpyOps
+  File "thinc/backends/numpy_ops.pyx", line 1, in init thinc.backends.numpy_ops
+ImportError: numpy.core.multiarray failed to import (auto-generated because you didn't call 'numpy.import_array()' after cimporting numpy; use '<void>numpy._import_array' to disable if you are certain you don't need it).
+[2026-09-10 22:36:50,512: INFO/MainProcess] UPDATE document SET stopped_at=%(stopped_at)s, error=%(error)s, status=%(status)s WHERE document.id = %(document_id)s::UUID
+[2026-09-10 22:36:50,512: INFO/MainProcess] [cached since 1328s ago] {'stopped_at': datetime.datetime(2026, 9, 10, 22, 36, 50, 512329), 'error': "numpy.core.multiarray failed to import (auto-generated because you didn't call 'numpy.import_array()' after cimporting numpy; use '<void>numpy._import_array' to disable if you are certain you don't need it).", 'status': <DocumentStatus.ERROR: 'error'>, 'document_id': UUID('e55e255a-040a-4b56-8ff7-cbc29e5e578c')}
+[2026-09-10 22:36:50,515: INFO/MainProcess] COMMIT
+[2026-09-10 22:36:50,516: WARNING/MainProcess] /Users/song/miniconda3/envs/llmops/lib/python3.12/site-packages/weaviate/warnings.py:312: ResourceWarning: Con004: The connection to Weaviate was not closed properly. This can lead to memory leaks.
+            Please make sure to close the connection using `client.close()`.
+  warnings.warn(
+
+[2026-09-10 22:36:50,543: INFO/MainProcess] Task internal.task.document_task.build_documents[346c2386-042c-4ff6-8ddd-d33d4f006b10] succeeded in 4.087224125047214s: None

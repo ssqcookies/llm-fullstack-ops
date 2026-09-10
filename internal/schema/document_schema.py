@@ -103,12 +103,16 @@ class CreateDocumentsReq(FlaskForm):
                 raise ValidationError("分隔符列表不能为空列表")
 
             # 12.校验分块大小chunk_size，涵盖了：非空、数字、范围
+            # - 必须是整数
+            # - 范围 100-1000
             if "chunk_size" not in field.data["segment"] or not isinstance(field.data["segment"]["chunk_size"], int):
                 raise ValidationError("分割块大小不能为空且为整数")
             if field.data["segment"]["chunk_size"] < 100 or field.data["segment"]["chunk_size"] > 1000:
                 raise ValidationError("分割块大小在100-1000")
 
             # 13.校验块重叠大小chunk_overlap，涵盖：非空、数字、范围
+            # - 必须是整数
+            # - 范围 0 到 chunk_size 的 50%
             if (
                     "chunk_overlap" not in field.data["segment"]
                     or not isinstance(field.data["segment"]["chunk_overlap"], int)

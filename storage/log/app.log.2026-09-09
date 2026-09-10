@@ -1,0 +1,270 @@
+[2026-09-09 23:08:27,132.132] base.py -> _execute_context line:1848 [INFO]: select pg_catalog.version()
+[2026-09-09 23:08:27,134.134] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:08:27,136.136] base.py -> _execute_context line:1848 [INFO]: select current_schema()
+[2026-09-09 23:08:27,136.136] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:08:27,139.139] base.py -> _execute_context line:1848 [INFO]: show standard_conforming_strings
+[2026-09-09 23:08:27,140.140] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:08:27,143.143] base.py -> _connection_begin_impl line:2712 [INFO]: BEGIN (implicit)
+[2026-09-09 23:08:27,145.145] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,145.145] base.py -> _execute_context line:1848 [INFO]: [generated in 0.00015s] {'table_name': 'api_tool_provider', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,151.151] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,151.151] base.py -> _execute_context line:1848 [INFO]: [cached since 0.006222s ago] {'table_name': 'api_tool', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,153.153] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,153.153] base.py -> _execute_context line:1848 [INFO]: [cached since 0.007445s ago] {'table_name': 'app', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,154.154] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,154.154] base.py -> _execute_context line:1848 [INFO]: [cached since 0.008558s ago] {'table_name': 'app_dataset_join', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,155.155] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,155.155] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01024s ago] {'table_name': 'conversation', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,157.157] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,159.159] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01404s ago] {'table_name': 'message', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,160.160] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,161.161] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01539s ago] {'table_name': 'message_agent_thought', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,162.162] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,162.162] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01666s ago] {'table_name': 'upload_file', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,164.164] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,164.164] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01866s ago] {'table_name': 'dataset', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,165.165] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,165.165] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01974s ago] {'table_name': 'document', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,166.166] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,166.166] base.py -> _execute_context line:1848 [INFO]: [cached since 0.02062s ago] {'table_name': 'segment', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,167.167] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,167.167] base.py -> _execute_context line:1848 [INFO]: [cached since 0.02147s ago] {'table_name': 'keyword_table', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,168.168] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,168.168] base.py -> _execute_context line:1848 [INFO]: [cached since 0.02273s ago] {'table_name': 'dataset_query', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,169.169] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:08:27,169.169] base.py -> _execute_context line:1848 [INFO]: [cached since 0.0237s ago] {'table_name': 'process_rule', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:08:27,171.171] base.py -> _execute_context line:1848 [INFO]: 
+CREATE TABLE conversation (
+	id UUID DEFAULT uuid_generate_v4() NOT NULL, 
+	app_id UUID NOT NULL, 
+	name VARCHAR(255) DEFAULT ''::character varying NOT NULL, 
+	summary TEXT DEFAULT ''::text NOT NULL, 
+	is_pinned BOOLEAN DEFAULT false NOT NULL, 
+	is_deleted BOOLEAN DEFAULT false NOT NULL, 
+	invoke_from VARCHAR(255) DEFAULT ''::character varying NOT NULL, 
+	created_by UUID, 
+	updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP(0) NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP(0) NOT NULL, 
+	CONSTRAINT pk_conversation_id PRIMARY KEY (id)
+)
+
+
+[2026-09-09 23:08:27,171.171] base.py -> _execute_context line:1848 [INFO]: [no key 0.00020s] {}
+[2026-09-09 23:08:27,219.219] base.py -> _execute_context line:1848 [INFO]: 
+CREATE TABLE message (
+	id UUID DEFAULT uuid_generate_v4() NOT NULL, 
+	app_id UUID NOT NULL, 
+	conversation_id UUID NOT NULL, 
+	invoke_from VARCHAR(255) DEFAULT ''::character varying NOT NULL, 
+	created_by UUID NOT NULL, 
+	query TEXT DEFAULT ''::text NOT NULL, 
+	message JSONB DEFAULT '[]'::jsonb NOT NULL, 
+	message_token_count INTEGER DEFAULT 0 NOT NULL, 
+	message_unit_price NUMERIC(10, 7) DEFAULT 0.0 NOT NULL, 
+	message_price_unit NUMERIC(10, 4) DEFAULT 0.0 NOT NULL, 
+	answer TEXT DEFAULT ''::text NOT NULL, 
+	answer_token_count INTEGER DEFAULT 0 NOT NULL, 
+	answer_unit_price NUMERIC(10, 7) DEFAULT 0.0 NOT NULL, 
+	answer_price_unit NUMERIC(10, 4) DEFAULT 0.0 NOT NULL, 
+	latency FLOAT DEFAULT 0.0 NOT NULL, 
+	is_deleted BOOLEAN DEFAULT false NOT NULL, 
+	status VARCHAR(255) DEFAULT ''::character varying NOT NULL, 
+	error TEXT DEFAULT ''::text NOT NULL, 
+	total_token_count INTEGER DEFAULT 0 NOT NULL, 
+	total_price NUMERIC(10, 7) DEFAULT 0.0 NOT NULL, 
+	updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP(0) NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP(0) NOT NULL, 
+	CONSTRAINT pk_message_id PRIMARY KEY (id)
+)
+
+
+[2026-09-09 23:08:27,491.491] base.py -> _execute_context line:1848 [INFO]: [no key 0.27265s] {}
+[2026-09-09 23:08:27,504.504] base.py -> _execute_context line:1848 [INFO]: 
+CREATE TABLE message_agent_thought (
+	id UUID DEFAULT uuid_generate_v4() NOT NULL, 
+	app_id UUID NOT NULL, 
+	conversation_id UUID NOT NULL, 
+	message_id UUID NOT NULL, 
+	invoke_from VARCHAR(255) DEFAULT ''::character varying NOT NULL, 
+	created_by UUID NOT NULL, 
+	position INTEGER DEFAULT 0 NOT NULL, 
+	event VARCHAR(255) DEFAULT ''::character varying NOT NULL, 
+	thought TEXT DEFAULT ''::text NOT NULL, 
+	observation TEXT DEFAULT ''::text NOT NULL, 
+	tool TEXT DEFAULT ''::text NOT NULL, 
+	tool_input JSONB DEFAULT '{}'::jsonb NOT NULL, 
+	message JSONB DEFAULT '[]'::jsonb NOT NULL, 
+	message_token_count INTEGER DEFAULT 0 NOT NULL, 
+	message_unit_price NUMERIC(10, 7) DEFAULT 0.0 NOT NULL, 
+	message_price_unit NUMERIC(10, 4) DEFAULT 0 NOT NULL, 
+	answer TEXT DEFAULT ''::text NOT NULL, 
+	answer_token_count INTEGER DEFAULT 0 NOT NULL, 
+	answer_unit_price NUMERIC(10, 7) DEFAULT 0.0 NOT NULL, 
+	answer_price_unit NUMERIC(10, 4) DEFAULT 0.0 NOT NULL, 
+	total_token_count INTEGER DEFAULT 0 NOT NULL, 
+	total_price NUMERIC(10, 7) DEFAULT 0.0 NOT NULL, 
+	latency FLOAT DEFAULT 0.0 NOT NULL, 
+	updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP(0) NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP(0) NOT NULL, 
+	CONSTRAINT pk_message_agent_thought_id PRIMARY KEY (id)
+)
+
+
+[2026-09-09 23:08:27,506.506] base.py -> _execute_context line:1848 [INFO]: [no key 0.00177s] {}
+[2026-09-09 23:08:27,509.509] base.py -> _connection_commit_impl line:2718 [INFO]: COMMIT
+[2026-09-09 23:22:54,005.005] base.py -> _execute_context line:1848 [INFO]: select pg_catalog.version()
+[2026-09-09 23:22:54,005.005] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:22:54,007.007] base.py -> _execute_context line:1848 [INFO]: select current_schema()
+[2026-09-09 23:22:54,007.007] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:22:54,008.008] base.py -> _execute_context line:1848 [INFO]: show standard_conforming_strings
+[2026-09-09 23:22:54,008.008] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:22:54,009.009] base.py -> _connection_begin_impl line:2712 [INFO]: BEGIN (implicit)
+[2026-09-09 23:22:54,011.011] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,011.011] base.py -> _execute_context line:1848 [INFO]: [generated in 0.00018s] {'table_name': 'api_tool_provider', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,015.015] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,015.015] base.py -> _execute_context line:1848 [INFO]: [cached since 0.003572s ago] {'table_name': 'api_tool', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,016.016] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,016.016] base.py -> _execute_context line:1848 [INFO]: [cached since 0.004411s ago] {'table_name': 'app', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,016.016] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,016.016] base.py -> _execute_context line:1848 [INFO]: [cached since 0.005169s ago] {'table_name': 'app_dataset_join', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,017.017] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,017.017] base.py -> _execute_context line:1848 [INFO]: [cached since 0.006044s ago] {'table_name': 'conversation', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,019.019] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,019.019] base.py -> _execute_context line:1848 [INFO]: [cached since 0.007834s ago] {'table_name': 'message', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,020.020] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,021.021] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01001s ago] {'table_name': 'message_agent_thought', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,022.022] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,022.022] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01132s ago] {'table_name': 'upload_file', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,023.023] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,023.023] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01214s ago] {'table_name': 'dataset', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,024.024] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,024.024] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01302s ago] {'table_name': 'document', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,025.025] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,025.025] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01403s ago] {'table_name': 'segment', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,026.026] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,026.026] base.py -> _execute_context line:1848 [INFO]: [cached since 0.0149s ago] {'table_name': 'keyword_table', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,027.027] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,027.027] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01577s ago] {'table_name': 'dataset_query', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,028.028] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:22:54,028.028] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01668s ago] {'table_name': 'process_rule', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:22:54,029.029] base.py -> _connection_commit_impl line:2718 [INFO]: COMMIT
+[2026-09-09 23:31:38,283.283] base.py -> _execute_context line:1848 [INFO]: select pg_catalog.version()
+[2026-09-09 23:31:38,283.283] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:31:38,285.285] base.py -> _execute_context line:1848 [INFO]: select current_schema()
+[2026-09-09 23:31:38,285.285] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:31:38,286.286] base.py -> _execute_context line:1848 [INFO]: show standard_conforming_strings
+[2026-09-09 23:31:38,286.286] base.py -> _execute_context line:1848 [INFO]: [raw sql] {}
+[2026-09-09 23:31:38,288.288] base.py -> _connection_begin_impl line:2712 [INFO]: BEGIN (implicit)
+[2026-09-09 23:31:38,291.291] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,291.291] base.py -> _execute_context line:1848 [INFO]: [generated in 0.00017s] {'table_name': 'api_tool_provider', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,293.293] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,293.293] base.py -> _execute_context line:1848 [INFO]: [cached since 0.002492s ago] {'table_name': 'api_tool', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,294.294] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,294.294] base.py -> _execute_context line:1848 [INFO]: [cached since 0.003394s ago] {'table_name': 'app', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,295.295] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,295.295] base.py -> _execute_context line:1848 [INFO]: [cached since 0.004775s ago] {'table_name': 'app_dataset_join', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,297.297] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,297.297] base.py -> _execute_context line:1848 [INFO]: [cached since 0.006304s ago] {'table_name': 'conversation', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,298.298] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,298.298] base.py -> _execute_context line:1848 [INFO]: [cached since 0.007685s ago] {'table_name': 'message', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,299.299] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,299.299] base.py -> _execute_context line:1848 [INFO]: [cached since 0.008619s ago] {'table_name': 'message_agent_thought', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,300.300] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,300.300] base.py -> _execute_context line:1848 [INFO]: [cached since 0.009532s ago] {'table_name': 'upload_file', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,301.301] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,301.301] base.py -> _execute_context line:1848 [INFO]: [cached since 0.0103s ago] {'table_name': 'dataset', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,302.302] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,302.302] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01111s ago] {'table_name': 'document', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,303.303] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,303.303] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01203s ago] {'table_name': 'segment', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,303.303] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,303.303] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01285s ago] {'table_name': 'keyword_table', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,304.304] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,304.304] base.py -> _execute_context line:1848 [INFO]: [cached since 0.0136s ago] {'table_name': 'dataset_query', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,305.305] base.py -> _execute_context line:1848 [INFO]: SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+[2026-09-09 23:31:38,305.305] base.py -> _execute_context line:1848 [INFO]: [cached since 0.01452s ago] {'table_name': 'process_rule', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+[2026-09-09 23:31:38,306.306] base.py -> _connection_commit_impl line:2718 [INFO]: COMMIT
