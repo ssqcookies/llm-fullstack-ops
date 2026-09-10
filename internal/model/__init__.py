@@ -5,11 +5,11 @@ from .conversation import Conversation, Message, MessageAgentThought
 from .dataset import Dataset, Document, Segment, KeywordTable, DatasetQuery, ProcessRule
 from .upload_file import UploadFile
 
-__all__ = ["App", "AppDatasetJoin",
-           "ApiTool", "ApiToolProvider",
-           "UploadFile",
-           "Dataset", "Document", "Segment", "KeywordTable", "DatasetQuery", "ProcessRule",
-           "Conversation", "Message", "MessageAgentThought",
-           "Account", "AccountOAuth",
-
-           ]
+__all__ = [
+    "App", "AppDatasetJoin",
+    "ApiTool", "ApiToolProvider",
+    "UploadFile",
+    "Dataset", "Document", "Segment", "KeywordTable", "DatasetQuery", "ProcessRule",
+    "Conversation", "Message", "MessageAgentThought",
+    "Account", "AccountOAuth",
+]

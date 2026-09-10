@@ -53,15 +53,23 @@ class Http(Flask):
         logging_extension.init_app(self)
 
         # # 解决前后端跨域问题
-        CORS(self,
-             supports_credentials=True,
-             resources={
-                 r"/*": {
-                     "origins": ["http://localhost:5173"],
-                     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-                     "allow_headers": ["Content-Type"]
-                 }
-             })
+        CORS(self, resources={
+            r"/*": {
+                "origins": "*",
+                "supports_credentials": True,
+                # "methods": ["GET", "POST"],
+                # "allow_headers": ["Content-Type"],
+            }
+        })
+        # CORS(self,
+        #      supports_credentials=True,
+        #      resources={
+        #          r"/*": {
+        #              "origins": ["http://localhost:5173"],
+        #              "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        #              "allow_headers": ["Content-Type"]
+        #          }
+        #      })
         #
         # with self.app_context():
         #     _ = App()

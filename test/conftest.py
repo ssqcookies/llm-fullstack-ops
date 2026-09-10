@@ -3,15 +3,8 @@
 @Author     :240227206@qq.com
 @File       :conftest.py
 """
-import sys
-from pathlib import Path
 
 import pytest
-
-# 把项目根目录加入环境变量，让Python识别到顶层包 app
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
-
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 from app.http.app import app as _app
@@ -29,6 +22,8 @@ def app():
 def client(app):
     """获取Flask应用的测试应用，并返回"""
     with app.test_client() as client:
+        access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NmRiMzBkMS0zMTk5LTRlNzktYTBjZC1hYmYxMmZhNjg1OGYiLCJpc3MiOiJsbG1vcHMiLCJleHAiOjE3MzM1MDU2NTR9.HSKjINY58fzengY3BmxIDOnJyACnBnz9NmgVN3y02iI"
+        client.environ_base["HTTP_AUTHORIZATION"] = f"Bearer {access_token}"
         yield client
 
 
