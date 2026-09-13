@@ -51,16 +51,18 @@ class Http(Flask):
         redis_extension.init_app(self)
         celery_extension.init_app(self)
         logging_extension.init_app(self)
+        login_manager.init_app(self)
 
         # # 解决前后端跨域问题
-        CORS(self, resources={
-            r"/*": {
-                "origins": "*",
-                "supports_credentials": True,
-                # "methods": ["GET", "POST"],
-                # "allow_headers": ["Content-Type"],
-            }
-        })
+        CORS(self,
+             resources={
+                 r"/*": {
+                     "origins": ["http://localhost:5173", "http://127.0.0.1:5173"],
+                     "supports_credentials": True,
+                     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                     "allow_headers": ["Content-Type", "Authorization"],
+                 }
+             })
         # CORS(self,
         #      supports_credentials=True,
         #      resources={

@@ -3,6 +3,9 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# 日志目录，全部忽略
+storage/log/*
+!storage/log/.gitkeep
 
 # Distribution / packaging
 .Python

@@ -42,18 +42,63 @@ class Router:
         # 1 创建蓝图
         bp = Blueprint("llmops", __name__, url_prefix="")
         # 2 将url与对应的控制器方法做绑定
-        # app.handle = AppHandler() ----使用inject消除硬编码实例化
 
-        bp.add_url_rule("/ping", view_func=self.app_handler.ping, methods=["GET"])
-        # URL路径 绑定到 Handler处理函数
-        bp.add_url_rule("/apps/<uuid:app_id>/completion", view_func=self.app_handler.completion,
-                        methods=["POST"], )
-        # bp.add_url_rule("/api/chat", view_func=self.app_handler.completion, methods=["POST"])
-        bp.add_url_rule("/app", view_func=self.app_handler.create_app, methods=["POST"])
-        bp.add_url_rule("/app/<uuid:id>", view_func=self.app_handler.get_app, methods=["GET"])
-        bp.add_url_rule("/app/<uuid:id>", view_func=self.app_handler.update_app, methods=["POST"])
-        bp.add_url_rule("/app/<uuid:id>", view_func=self.app_handler.delete_app, methods=["DELETE"])
-
+        bp.add_url_rule("/ping", view_func=self.app_handler.ping)
+        bp.add_url_rule("/apps", methods=["POST"], view_func=self.app_handler.create_app)
+        bp.add_url_rule("/apps/<uuid:app_id>", view_func=self.app_handler.get_app)
+        bp.add_url_rule("/apps/<uuid:app_id>/draft-app-config", view_func=self.app_handler.get_draft_app_config)
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/draft-app-config",
+            methods=["POST"],
+            view_func=self.app_handler.update_draft_app_config,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/publish",
+            methods=["POST"],
+            view_func=self.app_handler.publish,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/cancel-publish",
+            methods=["POST"],
+            view_func=self.app_handler.cancel_publish,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/publish-histories",
+            view_func=self.app_handler.get_publish_histories_with_page,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/fallback-history",
+            methods=["POST"],
+            view_func=self.app_handler.fallback_history_to_draft,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/summary",
+            view_func=self.app_handler.get_debug_conversation_summary,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/summary",
+            methods=["POST"],
+            view_func=self.app_handler.update_debug_conversation_summary,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/conversations/delete-debug-conversation",
+            methods=["POST"],
+            view_func=self.app_handler.delete_debug_conversation,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/conversations",
+            methods=["POST"],
+            view_func=self.app_handler.debug_chat,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/conversations/tasks/<uuid:task_id>/stop",
+            methods=["POST"],
+            view_func=self.app_handler.stop_debug_chat,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/conversations/messages",
+            view_func=self.app_handler.get_debug_conversation_messages_with_page,
+        )
         # 内置插件模块
         bp.add_url_rule("/builtin-tools", view_func=self.builtin_tool_handler.get_builtin_tools)
         bp.add_url_rule(

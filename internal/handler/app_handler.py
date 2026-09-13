@@ -3,37 +3,28 @@
 @Author     :240227206@qq.com
 @File       :app_handler.py
 """
-import os
-import uuid
+
 from dataclasses import dataclass
-from operator import itemgetter
-from typing import Dict, Any, Generator
 from uuid import UUID
 
+from flask import request
+from flask_login import login_required, current_user
 from injector import inject
-from langchain.memory import ConversationBufferWindowMemory
-from langchain_community.chat_message_histories import FileChatMessageHistory
-from langchain_core.documents import Document
-from langchain_core.memory import BaseMemory
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.runnables import RunnablePassthrough, RunnableLambda, RunnableConfig
-from langchain_core.tracers import Run
-from langchain_openai import ChatOpenAI
-from redis import Redis
 
-from internal.core.agent.agents import FunctionCallAgent, AgentQueueManager
-from internal.core.agent.entities.agent_entity import AgentConfig
-from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
-from internal.entity.conversation_entity import InvokeFrom
-from internal.exception import ValidationException
-from internal.schema.app_schema import CompletionReq
-from internal.service import AppService, VectorDatabaseService, ApiToolService, EmbeddingsService, ConversationService
-from internal.task.demo_task import demo_task
-from pkg.response import success_resp, success_message, validation_resp, compact_generate_response
-
-# 会话内存映射池【学习使用，生产环境替换为Redis持久映射】
-SESSION_MEM_MAP: Dict[str, BaseMemory] = {}
+from internal.schema.app_schema import (
+    CreateAppReq,
+    GetAppResp,
+    GetPublishHistoriesWithPageReq,
+    GetPublishHistoriesWithPageResp,
+    FallbackHistoryToDraftReq,
+    UpdateDebugConversationSummaryReq,
+    DebugChatReq,
+    GetDebugConversationMessagesWithPageReq,
+    GetDebugConversationMessagesWithPageResp
+)
+from internal.service import AppService, RetrievalService
+from pkg.paginator import PageModel
+from pkg.response import validation_resp, success_resp, success_message, compact_generate_response
 
 
 @inject
@@ -41,231 +32,147 @@ SESSION_MEM_MAP: Dict[str, BaseMemory] = {}
 class AppHandler:
     """应用控制器"""
     app_service: AppService
-    vector_database_service: VectorDatabaseService
-    api_tool_service: ApiToolService
-    embeddings_service: EmbeddingsService
-    builtin_provider_manager: BuiltinProviderManager
-    conversation_service: ConversationService
-    redis_client: Redis
+    retrieval_service: RetrievalService
 
+    @login_required
     def create_app(self):
-        """"调用服务创建新的app记录"""
-        app = self.app_service.create_app()
-        return success_message(f"应用已经成功创建，id为{app.id}")
-
-    def get_app(self, id: uuid.UUID):
-        app = self.app_service.get_app(id)
-        return success_message(f"应用已经成功获取，名字是{app.name}")
-
-    def update_app(self, id: uuid.UUID):
-        app = self.app_service.update_app(id)
-        return success_message(f"应用已经成功修改，名字是{app.name}")
-
-    def delete_app(self, id: uuid.UUID):
-        app = self.app_service.delete_app(id)
-        return success_message(f"应用已经成功删除，id为{app.id}")
-
-    def ping(self):
-        # google_serper = self.provider_factory.get_tool("google", "google_serper")()
-        # # raise FailException("数据未找到")
-        demo_task.delay(uuid.uuid4())
-        return "pong"
-
-    @classmethod
-    def _load_memory_variables(cls, input: Dict[str, Any], config: RunnableConfig) -> Dict[str, Any]:
-        """加载记忆变量信息"""
-        # 从config中获取configurable
-        configurable = config.get("configurable", {})
-        # configurable_memory = configurable.get("memory", None)
-        session_id = configurable.get("session_id", None)
-        configurable_memory = SESSION_MEM_MAP.get(session_id)
-        if configurable_memory is not None and isinstance(configurable_memory, BaseMemory):
-            return configurable_memory.load_memory_variables(input)
-        return {"history": []}
-
-    @classmethod
-    def save_context(cls, run_obj: Run, config: RunnableConfig) -> None:
-        """存储对应的上下文信息到记忆实体中"""
-        configurable = config.get("configurable", {})
-        session_id = configurable.get("session_id", None)
-        configurable_memory = SESSION_MEM_MAP.get(session_id)
-        # configurable_memory = configurable.get("memory", None)
-        if configurable_memory is not None and isinstance(configurable_memory, BaseMemory):
-            configurable_memory.save_context(run_obj.inputs, run_obj.outputs)
-
-    def debug(self, app_id: UUID):
-        """应用会话调试聊天接口，该接口为流式事件输出"""
-        # 1.提取从接口中获取的输入，POST
-        req = CompletionReq()
+        """调用服务创建新的APP记录"""
+        # 1.提取请求并校验
+        req = CreateAppReq()
         if not req.validate():
             return validation_resp(req.errors)
 
-        # 2.定义工具列表
-        tools = [
-            self.builtin_provider_manager.get_tool("google", "google_serper")(),
-            self.builtin_provider_manager.get_tool("gaode", "gaode_weather")()
-        ]
+        # 2.调用服务创建应用信息
+        app = self.app_service.create_app(req, current_user)
 
-        agent = FunctionCallAgent(
-            AgentConfig(
-                llm=ChatOpenAI(model="gpt-4o-mini"),
-                enable_long_term_memory=True,
-                tools=tools,
-            ),
-            AgentQueueManager(
-                user_id=uuid.uuid4(),
-                task_id=uuid.uuid4(),
-                invoke_from=InvokeFrom.DEBUGGER,
-                redis_client=self.redis_client,
-            )
-        )
+        # 3.返回创建成功响应提示
+        return success_resp({"id": app.id})
 
-        def stream_event_response() -> Generator:
-            """流式事件输出响应"""
-            for agent_queue_event in agent.run(req.query.data, [], "用户介绍自己叫慕小课"):
-                data = {
-                    "id": str(agent_queue_event.id),
-                    "task_id": str(agent_queue_event.task_id),
-                    "event": agent_queue_event.event,
-                    "thought": agent_queue_event.thought,
-                    "observation": agent_queue_event.observation,
-                    "tool": agent_queue_event.tool,
-                    "tool_input": agent_queue_event.tool_input,
-                    "answer": agent_queue_event.answer,
-                    "latency": agent_queue_event.latency
-                }
-                yield f"event: {agent_queue_event.event}\ndata: {json.dumps(data)}\n\n"
+    @login_required
+    def get_app(self, app_id: UUID):
+        """获取指定的应用基础信息"""
+        app = self.app_service.get_app(app_id, current_user)
+        resp = GetAppResp()
+        return success_resp(resp.dump(app))
 
-        return compact_generate_response(stream_event_response())
+    @login_required
+    def get_draft_app_config(self, app_id: UUID):
+        """根据传递的应用id获取应用的最新草稿配置"""
+        draft_config = self.app_service.get_draft_app_config(app_id, current_user)
+        return success_resp(draft_config)
 
-    @classmethod
-    def _combine_documents(cls, documents: list[Document]) -> str:
-        """将传入的文档列表合并成字符串"""
-        return "\n\n".join([document.page_content for document in documents])
+    @login_required
+    def update_draft_app_config(self, app_id: UUID):
+        """根据传递的应用id+草稿配置更新应用的最新草稿配置"""
+        # 1.获取草稿请求json数据
+        draft_app_config = request.get_json(force=True, silent=True) or {}
 
-    def ping(self):
-        from internal.core.agent.agents import FunctionCallAgent
-        from internal.core.agent.entities.agent_entity import AgentConfig
-        from langchain_openai import ChatOpenAI
+        # 2.调用服务更新应用的草稿配置
+        self.app_service.update_draft_app_config(app_id, draft_app_config, current_user)
 
-        agent = FunctionCallAgent(AgentConfig(
-            llm=ChatOpenAI(model="gpt-4o-mini"),
-            preset_prompt="你是一个拥有20年经验的诗人，请根据用户提供的主题来写一首诗"
-        ))
-        state = agent.run("程序员", [], "")
-        content = state["messages"][-1].content
+        return success_message("更新应用草稿配置成功")
 
-        return success_resp({"content": content})
+    @login_required
+    def publish(self, app_id: UUID):
+        """根据传递的应用id发布/更新特定的草稿配置信息"""
+        self.app_service.publish_draft_app_config(app_id, current_user)
+        return success_message("发布/更新应用配置成功")
 
-    def completion(self, app_id: uuid.UUID):
-        """聊天接口"""
-        # 1 提取从接口中获取的输入，post
-        # query = request.json.get("query")
-        req = CompletionReq()
+    @login_required
+    def cancel_publish(self, app_id: UUID):
+        """根据传递的应用id，取消发布指定的应用配置信息"""
+        self.app_service.cancel_publish_app_config(app_id, current_user)
+        return success_message("取消发布应用配置成功")
+
+    @login_required
+    def fallback_history_to_draft(self, app_id: UUID):
+        """根据传递的应用id+历史配置版本id，退回指定版本到草稿中"""
+        # 1.提取数据并校验
+        req = FallbackHistoryToDraftReq()
         if not req.validate():
-            raise ValidationException(req.errors)
+            return validation_resp(req.errors)
 
-        # 校验通过，用 .data 拿真实字符串
-        # query_content = req.query.data
-        #
-        # # 2 构建openai客户端，并发起请求
-        # kimi_client = OpenAI(
-        #     api_key=os.getenv("KIMI_API_KEY"),
-        #     base_url=os.getenv("KIMI_BASE_URL")
-        # )
-        #
-        # resp = kimi_client.chat.completions.create(
-        #     model="kimi-k2.7-code",
-        #     messages=[
-        #         {"role": "user", "content": query_content}
-        #     ]
-        # )
-        # ai_answer = resp.choices[0].message.content
-        #
-        # # 3. 包装JSON返回给前端
-        # return success_resp({"content": ai_answer})
-        query_content = req.query.data
+        # 2.调用服务回退指定版本到草稿
+        self.app_service.fallback_history_to_draft(app_id, req.app_config_version_id.data, current_user)
 
-        # 生成会话标识，正式业务建议前端传入session_id区分聊天窗口
+        return success_message("回退历史配置至草稿成功")
 
-        # 创建prompt与记忆
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", "你是一个强大的聊天机器人，能根据用户提问回复对应的问题"),
-            MessagesPlaceholder("history"),
-            ("human", "{query}")
-        ])
-        # ==========改动重点==========
-        # 从请求体获取前端传来的session_id
-        session_id = app_id
+    @login_required
+    def get_publish_histories_with_page(self, app_id: UUID):
+        """根据传递的应用id，获取应用发布历史列表"""
+        # 1.获取请求数据并校验
+        req = GetPublishHistoriesWithPageReq(request.args)
+        if not req.validate():
+            return validation_resp(req.errors)
 
-        # 不存在则新建
-        if not session_id:
-            session_id = str(uuid.uuid4())
+        # 2.调用服务获取分页列表数据
+        app_config_versions, paginator = self.app_service.get_publish_histories_with_page(app_id, req, current_user)
 
-        # 去全局映射池查找memory
-        memory = SESSION_MEM_MAP.get(session_id)
-        # 找不到就创建新记忆实例
-        if memory is None:
-            memory = ConversationBufferWindowMemory(
-                k=3,
-                input_key="query",
-                output_key="output",
-                return_messages=True,
-                chat_memory=FileChatMessageHistory(f"./storage/memory/{session_id}.txt"),
-            )
-            SESSION_MEM_MAP[session_id] = memory
-        # ==========================
-        # memory = ConversationBufferWindowMemory(
-        #     k=3,
-        #     input_key="query",
-        #     output_key="output",
-        #     return_messages=True,
-        #     chat_memory=FileChatMessageHistory(f"./storage/memory/{session_id}.txt"),
-        # )
-        # # 将memory存入全局会话映射
-        # SESSION_MEM_MAP[session_id] = memory
+        # 3.创建响应结构并返回
+        resp = GetPublishHistoriesWithPageResp(many=True)
 
-        llm = ChatOpenAI(
-            api_key=os.getenv("KIMI_API_KEY"),
-            base_url=os.getenv("KIMI_BASE_URL"),
-            model="kimi-k2.6",
-            temperature=1
-        )
+        return success_resp(PageModel(list=resp.dump(app_config_versions), paginator=paginator))
 
-        # chain = RunnablePassthrough.assign(
-        #     history=RunnableLambda(memory.load_memory_variables) | itemgetter("history")
-        # ) | prompt | llm | StrOutputParser()
-        chain = (RunnablePassthrough.assign(
-            history=RunnableLambda(self._load_memory_variables) | itemgetter("history")
-        ) | prompt | llm | StrOutputParser()).with_listeners(on_end=self.save_context)
+    @login_required
+    def get_debug_conversation_summary(self, app_id: UUID):
+        """根据传递的应用id获取调试会话长期记忆"""
+        summary = self.app_service.get_debug_conversation_summary(app_id, current_user)
+        return success_resp({"summary": summary})
 
-        # 调用链生成内容
-        chain_input = {"query": query_content}
-        # content = chain.invoke(chain_input)
-        # ❌ 0.2.x 禁止：往configurable传入对象实例，configurable 只允许存放可序列化基础类型（str /int/float /bool）
-        # 旧版 langchain - core：✅ 允许 configurable 存放任意 Python 对象（Memory 实例、类实例）
-        # content = chain.invoke(chain_input, config={"configurable": {"memory": memory}})
-        # ✅ 仅传递字符串session_id，不再传递对象，规避类型校验报错
-        # 构造配置
-        run_config: RunnableConfig = {
-            "configurable": {"session_id": session_id}
-        }
-        content = chain.invoke(chain_input, config=run_config)
+    @login_required
+    def update_debug_conversation_summary(self, app_id: UUID):
+        """根据传递的应用id+摘要信息更新调试会话长期记忆"""
+        # 1.提取数据并校验
+        req = UpdateDebugConversationSummaryReq()
+        if not req.validate():
+            return validation_resp(req.errors)
 
-        # memory.save_context(chain_input, {"output": content})
+        # 2.调用服务更新调试会话长期记忆
+        self.app_service.update_debug_conversation_summary(app_id, req.summary.data, current_user)
 
-        # 无记忆单次调用
+        return success_message("更新AI应用长期记忆成功")
 
-        # prompt = ChatPromptTemplate.from_template("{query}")
-        # llm = ChatOpenAI(
-        #     api_key=os.getenv("KIMI_API_KEY"),
-        #     base_url=os.getenv("KIMI_BASE_URL"),
-        #     model="kimi-k2.6",
-        #     temperature=1
-        # )
-        # parser = StrOutputParser()
-        #
-        # chain = prompt | llm | parser
-        # content = chain.invoke({"query": query_content})
+    @login_required
+    def delete_debug_conversation(self, app_id: UUID):
+        """根据传递的应用id，清空该应用的调试会话记录"""
+        self.app_service.delete_debug_conversation(app_id, current_user)
+        return success_message("清空应用调试会话记录成功")
 
-        return success_resp({"content": content})
+    @login_required
+    def debug_chat(self, app_id: UUID):
+        """根据传递的应用id+query，发起调试对话"""
+        # 1.提取数据并校验数据
+        req = DebugChatReq()
+        if not req.validate():
+            return validation_resp(req.errors)
+
+        # 2.调用服务发起会话调试
+        response = self.app_service.debug_chat(app_id, req.query.data, current_user)
+
+        return compact_generate_response(response)
+
+    @login_required
+    def stop_debug_chat(self, app_id: UUID, task_id: UUID):
+        """根据传递的应用id+任务id停止某个应用的指定调试会话"""
+        self.app_service.stop_debug_chat(app_id, task_id, current_user)
+        return success_message("停止应用调试会话成功")
+
+    @login_required
+    def get_debug_conversation_messages_with_page(self, app_id: UUID):
+        """根据传递的应用id，获取该应用的调试会话分页列表记录"""
+        # 1.提取请求并校验数据
+        req = GetDebugConversationMessagesWithPageReq(request.args)
+        if not req.validate():
+            return validation_resp(req.errors)
+
+        # 2.调用服务获取数据
+        messages, paginator = self.app_service.get_debug_conversation_messages_with_page(app_id, req, current_user)
+
+        # 3.创建响应结构
+        resp = GetDebugConversationMessagesWithPageResp(many=True)
+
+        return success_resp(PageModel(list=resp.dump(messages), paginator=paginator))
+
+    @login_required
+    def ping(self):
+        pass

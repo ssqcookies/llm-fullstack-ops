@@ -30,7 +30,6 @@ app = Http(
     migrate=injector.get(Migrate),
     login_manager=injector.get(LoginManager),
     middleware=injector.get(Middleware),
-
     router=injector.get(Router)
 )
 
