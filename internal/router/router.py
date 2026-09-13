@@ -14,6 +14,7 @@ from internal.handler import (
     OAuthHandler,
     AccountHandler,
     AuthHandler,
+    AIHandler,
 )
 
 
@@ -31,6 +32,7 @@ class Router:
     oauth_handler: OAuthHandler
     account_handler: AccountHandler
     auth_handler: AuthHandler
+    ai_handler: AIHandler
     # @dataclass Python3.7+ 内置 数据类装饰器，简化类样板代码：
     # 自动根据类属性 app_handler: AppHandler 生成 __init__ 构造方法
     # 自动生成 __repr__、__eq__ 等魔术方法
@@ -255,5 +257,11 @@ class Router:
         bp.add_url_rule("/account/name", methods=["POST"], view_func=self.account_handler.update_name)
         bp.add_url_rule("/account/avatar", methods=["POST"], view_func=self.account_handler.update_avatar)
 
+        # 8.AI辅助模块
+        bp.add_url_rule("/ai/optimize-prompt", methods=["POST"], view_func=self.ai_handler.optimize_prompt)
+        bp.add_url_rule(
+            "/ai/suggested-questions", methods=["POST"],
+            view_func=self.ai_handler.generate_suggested_questions,
+        )
         # 6.在应用上注册蓝图
         app.register_blueprint(bp)
