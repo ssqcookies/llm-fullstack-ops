@@ -12,7 +12,7 @@ from injector import inject
 from sqlalchemy import desc
 
 from internal.entity.dataset_entity import DEFAULT_DATASET_DESCRIPTION_FORMATTER
-from internal.exception import ValidationException, NotFoundException, FailException
+from internal.exception import NotFoundException, FailException
 from internal.lib.helper import datetime_to_timestamp
 from internal.model import Dataset, Segment, DatasetQuery, AppDatasetJoin, Account
 from internal.schema.dataset_schema import (
@@ -43,7 +43,7 @@ class DatasetService(BaseService):
             name=req.name.data,
         ).one_or_none()
         if dataset:
-            raise ValidationException(f"该知识库{req.name.data}已存在")
+            raise ValidateErrorException(f"该知识库{req.name.data}已存在")
 
         # 2.检测是否传递了描述信息，如果没有传递需要补充上
         if req.description.data is None or req.description.data.strip() == "":
@@ -94,7 +94,7 @@ class DatasetService(BaseService):
             Dataset.id != dataset_id,
         ).one_or_none()
         if check_dataset:
-            raise ValidationException(f"该知识库名称{req.name.data}已存在，请修改")
+            raise ValidateErrorException(f"该知识库名称{req.name.data}已存在，请修改")
 
         # 3.校验描述信息是否为空，如果为空则人为设置
         if req.description.data is None or req.description.data.strip() == "":
@@ -137,7 +137,7 @@ class DatasetService(BaseService):
         # 2.调用检索服务执行检索
         lc_documents = self.retrieval_service.search_in_datasets(
             dataset_ids=[dataset_id],
-            account=account,
+            account_id=account.id,
             **req.data,
         )
         lc_document_dict = {str(lc_document.metadata["segment_id"]): lc_document for lc_document in lc_documents}

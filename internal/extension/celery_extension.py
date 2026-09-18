@@ -3,6 +3,23 @@
 @Author     :240227206@qq.com
 @File       :celery_extension.py
 """
+
+import warnings
+
+import numpy as np
+
+with warnings.catch_warnings():
+    warnings.simplefilter('ignore')
+    np.long = int
+    np.ulong = int
+    np.object = object
+    np.int = int
+    np.float = float
+    np.bool = bool
+    np.str = str
+    np.unicode = str
+    np.complex = complex
+
 from celery import Task, Celery
 from flask import Flask
 

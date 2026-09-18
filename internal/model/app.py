@@ -4,7 +4,6 @@
 @File       :app.py
 """
 
-from internal.entity.app_entity import AppConfigType, DEFAULT_APP_CONFIG
 from sqlalchemy import (
     Column,
     UUID,
@@ -17,6 +16,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.dialects.postgresql import JSONB
 
+from internal.entity.app_entity import AppConfigType, DEFAULT_APP_CONFIG
 from internal.entity.conversation_entity import InvokeFrom
 from internal.extension.database_extension import db
 from .conversation import Conversation
@@ -45,6 +45,13 @@ class App(db.Model):
         server_onupdate=text("CURRENT_TIMESTAMP(0)"),
     )
     created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
+
+    @property
+    def app_config(self) -> "AppConfig":
+        """只读属性，返回当前应用的运行配置"""
+        if not self.app_config_id:
+            return None
+        return db.session.query(AppConfig).get(self.app_config_id)
 
     @property
     def draft_app_config(self) -> "AppConfigVersion":
@@ -132,6 +139,15 @@ class AppConfig(db.Model):
         server_onupdate=text("CURRENT_TIMESTAMP(0)"),
     )
     created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
+
+    @property
+    def app_dataset_joins(self) -> list["AppDatasetJoin"]:
+        """只读属性，获取配置的知识库关联记录"""
+        return (
+            db.session.query(AppDatasetJoin).filter(
+                AppDatasetJoin.app_id == self.app_id
+            ).all()
+        )
 
 
 class AppConfigVersion(db.Model):

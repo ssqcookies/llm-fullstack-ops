@@ -3,6 +3,9 @@
 @Author     :240227206@qq.com
 @File       :app.py
 """
+import warnings
+
+import numpy as np
 from dotenv import load_dotenv
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -14,6 +17,18 @@ from internal.middleware import Middleware
 from internal.router import Router
 from internal.server import Http
 from pkg.sqlalchemy import SQLAlchemy
+
+with warnings.catch_warnings():
+    warnings.simplefilter('ignore')
+    np.long = int
+    np.ulong = int
+    np.object = object
+    np.int = int
+    np.float = float
+    np.bool = bool
+    np.str = str
+    np.unicode = str
+    np.complex = complex
 
 # 第一步优先加载环境变量
 load_dotenv(override=True)

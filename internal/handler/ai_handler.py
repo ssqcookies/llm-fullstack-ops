@@ -11,7 +11,7 @@ from injector import inject
 
 from internal.schema.ai_schema import OptimizePromptReq, GenerateSuggestedQuestionsReq
 from internal.service import AIService
-from pkg.response import validate_error_json, compact_generate_response, success_json
+from pkg.response import validation_resp, compact_generate_response, success_resp
 
 
 @inject
@@ -26,7 +26,7 @@ class AIHandler:
         # 1.提取请求并校验
         req = OptimizePromptReq()
         if not req.validate():
-            return validate_error_json(req.errors)
+            return validation_resp(req.errors)
 
         # 2.调用服务优化prompt
         resp = self.ai_service.optimize_prompt(req.prompt.data)
@@ -39,7 +39,7 @@ class AIHandler:
         # 1.提取请求并校验
         req = GenerateSuggestedQuestionsReq()
         if not req.validate():
-            return validate_error_json(req.errors)
+            return validation_resp(req.errors)
 
         # 2.调用服务生成建议问题列表
         suggested_questions = self.ai_service.generate_suggested_questions_from_message_id(
@@ -47,4 +47,4 @@ class AIHandler:
             current_user,
         )
 
-        return success_json(suggested_questions)
+        return success_resp(suggested_questions)
