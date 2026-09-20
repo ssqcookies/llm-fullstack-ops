@@ -18,7 +18,8 @@ from internal.handler import (
     ApiKeyHandler,
     OpenAPIHandler,
     BuiltinAppHandler,
-    WorkflowHandler
+    WorkflowHandler,
+    LanguageModelHandler,
 )
 
 
@@ -41,6 +42,7 @@ class Router:
     openapi_handler: OpenAPIHandler
     builtin_app_handler: BuiltinAppHandler
     workflow_handler: WorkflowHandler
+    language_model_handler: LanguageModelHandler
 
     # @dataclass Python3.7+ 内置 数据类装饰器，简化类样板代码：
     # 自动根据类属性 app_handler: AppHandler 生成 __init__ 构造方法
@@ -350,6 +352,17 @@ class Router:
             "/workflows/<uuid:workflow_id>/cancel-publish",
             methods=["POST"],
             view_func=self.workflow_handler.cancel_publish_workflow,
+        )
+
+        # 12.语言模型模块
+        bp.add_url_rule("/language-models", view_func=self.language_model_handler.get_language_models)
+        bp.add_url_rule(
+            "/language-models/<string:provider_name>/icon",
+            view_func=self.language_model_handler.get_language_model_icon,
+        )
+        bp.add_url_rule(
+            "/language-models/<string:provider_name>/<string:model_name>",
+            view_func=self.language_model_handler.get_language_model,
         )
 
         # 12.在应用上注册蓝图

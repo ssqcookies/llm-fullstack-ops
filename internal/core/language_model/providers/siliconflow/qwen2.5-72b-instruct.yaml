@@ -1,0 +1,46 @@
+model: qwen2.5-72b-instruct
+label: Qwen2.5-72B
+model_type: chat
+features:
+  - tool_call
+  - agent_thought
+context_window: 32768
+max_output_tokens: 8192
+attributes:
+  model: qwen2.5-72b-instruct
+metadata:
+  pricing:
+    input: 0.0400
+    output: 0.1200
+    unit: 0.001
+    currency: RMB
+parameters:
+  - name: temperature
+    use_template: temperature
+    label: 温度
+    type: float
+    min: 0
+    max: 2
+    default: 0.7
+    precision: 0.1
+    help: 值越大输出越随机，值越小输出越确定
+  - name: top_p
+    use_template: top_p
+    label: 核采样
+    type: float
+    min: 0
+    max: 1
+    default: 0.9
+    precision: 0.1
+    help: 与温度二选一，控制候选词概率累计
+  - name: presence_penalty
+    use_template: presence_penalty
+  - name: frequency_penalty
+    use_template: frequency_penalty
+  - name: max_tokens
+    use_template: max_tokens
+    default: 8192
+    label: 最大输出长度
+    type: int
+    min: 1
+    help: 限制回复的最大Token数量

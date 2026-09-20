@@ -16,6 +16,5 @@ __all__ = [
     "Conversation", "Message", "MessageAgentThought",
     "Account", "AccountOAuth",
     "ApiKey", "EndUser",
-    "Workflow", "WorkflowResult",
-
+    "Workflow", "WorkflowResult"
 ]

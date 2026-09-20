@@ -15,7 +15,6 @@ from sqlalchemy import (
 )
 
 from internal.extension.database_extension import db
-from .account import Account
 
 
 class ApiKey(db.Model):
@@ -41,4 +40,5 @@ class ApiKey(db.Model):
     @property
     def account(self) -> "Account":
         """只读属性，返回该秘钥归属的账号信息"""
+        from internal.model.account import Account
         return db.session.query(Account).get(self.account_id)
