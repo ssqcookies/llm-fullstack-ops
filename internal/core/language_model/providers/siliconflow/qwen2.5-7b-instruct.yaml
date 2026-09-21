@@ -1,4 +1,4 @@
-model: qwen2.5-7b-instruct
+model: Qwen/Qwen2.5-7B-Instruct
 label: Qwen2.5-7B
 model_type: chat
 features:
@@ -7,7 +7,7 @@ features:
 context_window: 32768
 max_output_tokens: 4096
 attributes:
-  model: qwen2.5-7b-instruct
+  model: Qwen/Qwen2.5-7B-Instruct
 metadata:
   pricing:
     input: 0

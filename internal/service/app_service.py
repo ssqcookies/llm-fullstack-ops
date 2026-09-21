@@ -6,6 +6,7 @@
 
 import io
 import json
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from threading import Thread
@@ -37,7 +38,7 @@ from internal.entity.app_entity import AppStatus, AppConfigType, DEFAULT_APP_CON
 from internal.entity.app_entity import GENERATE_ICON_PROMPT_TEMPLATE
 from internal.entity.conversation_entity import InvokeFrom, MessageStatus
 from internal.entity.dataset_entity import RetrievalSource
-from internal.exception import NotFoundException, ForbiddenException, FailException, ValidationException
+from internal.exception import NotFoundException, ForbiddenException, ValidationException, FailException
 from internal.lib.helper import remove_fields, get_value_type, generate_random_string
 from internal.model import (
     App,
@@ -86,8 +87,13 @@ class AppService(BaseService):
     def auto_create_app(self, name: str, description: str, account_id: UUID) -> None:
         """根据传递的应用名称、描述、账号id利用AI创建一个Agent智能体"""
         # 1.创建LLM，用于生成icon提示与预设提示词
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.8)
-
+        # llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.8)
+        llm = ChatOpenAI(
+            model="Qwen/Qwen2.5-7B-Instruct",
+            temperature=0.8,
+            openai_api_base="https://api.siliconflow.cn/v1",
+            openai_api_key=os.getenv("SILICONFLOW_API_KEY"),
+        )
         # 2.创建DallEApiWrapper包装器
         dalle_api_wrapper = DallEAPIWrapper(model="dall-e-3", size="1024x1024")
 
@@ -732,6 +738,7 @@ class AppService(BaseService):
             # 3.4 判断模型信息是否正确
             if not model_config["model"] or not isinstance(model_config["model"], str):
                 raise ValidationException("模型名字必须是否字符串")
+
             model_entity = provider.get_model_entity(model_config["model"])
             if not model_entity:
                 raise ValidationException("该服务提供商下不存在该模型，请核实后重试")

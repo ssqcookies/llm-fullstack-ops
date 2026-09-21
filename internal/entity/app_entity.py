@@ -31,8 +31,8 @@ class AppConfigType(str, Enum):
 # 应用默认配置信息
 DEFAULT_APP_CONFIG = {
     "model_config": {
-        "provider": "openai",
-        "model": "gpt-4o-mini",
+        "provider": "siliconflow",
+        "model": "qwen2.5-7b-instruct",
         "parameters": {
             "temperature": 0.5,
             "top_p": 0.85,

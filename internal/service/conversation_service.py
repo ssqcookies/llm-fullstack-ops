@@ -5,6 +5,7 @@
 """
 
 import logging
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
@@ -12,7 +13,6 @@ from uuid import UUID
 
 from flask import Flask
 from injector import inject
-from internal.schema.conversation_schema import GetConversationMessagesWithPageReq
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
@@ -28,6 +28,7 @@ from internal.entity.conversation_entity import (
 )
 from internal.exception import NotFoundException
 from internal.model import Conversation, Message, MessageAgentThought, Account
+from internal.schema.conversation_schema import GetConversationMessagesWithPageReq
 from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
@@ -46,8 +47,13 @@ class ConversationService(BaseService):
         prompt = ChatPromptTemplate.from_template(SUMMARIZER_TEMPLATE)
 
         # 2.构建大语言模型实例，并且将大语言模型的温度调低，降低幻觉的概率
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
-
+        # llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
+        llm = ChatOpenAI(
+            model="Qwen/Qwen2.5-7B-Instruct",
+            temperature=0.5,
+            openai_api_base="https://api.siliconflow.cn/v1",
+            openai_api_key=os.getenv("SILICONFLOW_API_KEY"),
+        )
         # 3.构建链应用
         summary_chain = prompt | llm | StrOutputParser()
 
@@ -69,7 +75,13 @@ class ConversationService(BaseService):
         ])
 
         # 2.构建大语言模型实例，并且将大语言模型的温度调低，降低幻觉的概率
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        # llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        llm = ChatOpenAI(
+            model="Qwen/Qwen2.5-7B-Instruct",
+            temperature=0,
+            openai_api_base="https://api.siliconflow.cn/v1",
+            openai_api_key=os.getenv("SILICONFLOW_API_KEY"),
+        )
         structured_llm = llm.with_structured_output(ConversationInfo)
 
         # 3.构建链应用
@@ -105,7 +117,13 @@ class ConversationService(BaseService):
         ])
 
         # 2.构建大语言模型实例，并且将大语言模型的温度调低，降低幻觉的概率
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        # llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        llm = ChatOpenAI(
+            model="Qwen/Qwen2.5-7B-Instruct",
+            temperature=0,
+            openai_api_base="https://api.siliconflow.cn/v1",
+            openai_api_key=os.getenv("SILICONFLOW_API_KEY"),
+        )
         structured_llm = llm.with_structured_output(SuggestedQuestions)
 
         # 3.构建链应用

@@ -64,7 +64,6 @@ class Provider(BaseModel):
             raise FailException("positions.yaml数据格式错误")
 
         # 6.循环读取位置中的模型名字
-        print(f"positions_yaml_data = {positions_yaml_data} ")
 
         for model_name in positions_yaml_data:
             # 7.组装每一个模型的详细信息
@@ -88,7 +87,8 @@ class Provider(BaseModel):
 
             # 12.修改对应模板的yaml数据，并创建ModelEntity随后传递给provider
             model_yaml_data["parameters"] = parameters
-            provider["model_entity_map"][model_name] = ModelEntity(**model_yaml_data)
+            model_entity = ModelEntity(**model_yaml_data)
+            provider["model_entity_map"][model_entity.model_name] = model_entity
 
         return provider
 
@@ -105,6 +105,13 @@ class Provider(BaseModel):
         if model_entity is None:
             raise NotFoundException("该模型实体不存在，请核实后重试")
         return model_entity
+
+    def get_model_entity_by_model(self, model: str) -> Optional[ModelEntity]:
+        """根据 model 字段值（API 模型名）查找模型实体"""
+        for entity in self.model_entity_map.values():
+            if entity.model_name == model:
+                return entity
+        raise NotFoundException("该模型实体不存在，请核实后重试")
 
     def get_model_entities(self) -> list[ModelEntity]:
         """获取该服务提供者的所有模型实体列表信息"""
