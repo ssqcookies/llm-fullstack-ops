@@ -1,0 +1,44 @@
+model: glm-4.6v-flash
+name: glm-4.6v-flash
+label: GLM-4.6V-Flash
+model_type: chat
+features:
+  - tool_call
+  - agent_thought
+  - image_input
+context_window: 128000
+max_output_tokens: 8192
+attributes:
+  model: glm-4.6v-flash
+metadata:
+  pricing:
+    input: 0
+    output: 0
+    unit: 0.001
+    currency: RMB
+parameters:
+  - name: temperature
+    use_template: temperature
+    label: 温度
+    type: float
+    min: 0
+    max: 1
+    default: 0.7
+    precision: 0.1
+    help: 值越大输出越随机，值越小输出越确定
+  - name: top_p
+    use_template: top_p
+    label: 核采样
+    type: float
+    min: 0
+    max: 1
+    default: 0.7
+    precision: 0.1
+    help: 与温度二选一，控制候选词概率累计
+  - name: max_tokens
+    use_template: max_tokens
+    default: 4096
+    label: 最大输出长度
+    type: int
+    min: 1
+    help: 限制回复的最大Token数量

@@ -29,6 +29,8 @@ share/python-wheels/
 MANIFEST
 .idea/
 
+# NLTK 数据
+internal/core/unstructured/nltk_data/
 
 # PyInstaller
 #   Usually these files are written by a python script from a template

@@ -53,7 +53,7 @@ class EmbeddingsService:
     @classmethod
     def calculate_token_count(cls, query: str) -> int:
         """计算传入文本的token数"""
-        encoding = tiktoken.encoding_for_model("gpt-3.5")
+        encoding = tiktoken.encoding_for_model("gpt-3.5")  # 只是估算，用 cl100k_base 凑合用
         return len(encoding.encode(query))
 
     @property

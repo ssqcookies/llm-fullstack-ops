@@ -143,9 +143,8 @@ class LanguageModelService(BaseService):
     def load_default_language_model(cls) -> BaseLanguageModel:
         """加载默认的大语言模型，在模型管理器中获取不到模型或者出错时使用默认模型进行兜底"""
         return ChatOpenAI(
-            model="Qwen/Qwen2.5-7B-Instruct",
-            temperature=0.7,
-            max_tokens=4096,
-            api_base="https://api.siliconflow.cn/v1",
-            api_key=os.getenv("SILICONFLOW_API_KEY"),
+            model=os.getenv("BIGMODEL_MODEL_NAME"),
+            temperature=0.5,
+            openai_api_base=os.getenv("BIGMODEL_URL"),
+            openai_api_key=os.getenv("BIGMODEL_API_KEY"),
         )

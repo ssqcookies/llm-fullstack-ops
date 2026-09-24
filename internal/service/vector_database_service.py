@@ -83,7 +83,7 @@ class VectorDatabaseService:
 #
 #         # 2.创建/连接weaviate向量数据库
 #         self.client = weaviate.connect_to_local(
-#             host=os.getenv("WEAVIATE_HOST", "127.0.0.1"),
+#             host=os.getenv("WEAVIATE_HTTP_HOST", "127.0.0.1"),
 #             port=int(os.getenv("WEAVIATE_HTTP_PORT", "8080")),
 #             grpc_port=int(os.getenv("WEAVIATE_GRPC_PORT", "50051")),
 #         )

@@ -90,10 +90,10 @@ class AppService(BaseService):
         # 1.创建LLM，用于生成icon提示与预设提示词
         # llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.8)
         llm = ChatOpenAI(
-            model="Qwen/Qwen2.5-7B-Instruct",
+            model=os.getenv("BIGMODEL_MODEL_NAME"),
             temperature=0.8,
-            openai_api_base="https://api.siliconflow.cn/v1",
-            openai_api_key=os.getenv("SILICONFLOW_API_KEY"),
+            openai_api_base=os.getenv("BIGMODEL_URL"),
+            openai_api_key=os.getenv("BIGMODEL_API_KEY"),
         )
         # 2.创建DallEApiWrapper包装器
         dalle_api_wrapper = DallEAPIWrapper(model="dall-e-3", size="1024x1024")

@@ -1,0 +1,85 @@
+model: FunAudioLLM/CosyVoice2-0.5B
+name: cosyvoice2-0.5b
+label: CosyVoice2-0.5B
+model_type: text_to_speech
+features: [ ]
+context_window: 0
+max_output_tokens: 128000
+attributes:
+  model: FunAudioLLM/CosyVoice2-0.5B
+  voices:
+    - alex
+    - benjamin
+    - charles
+    - david
+    - anna
+    - bella
+    - claire
+    - diana
+  supported_formats:
+    - mp3
+    - wav
+    - opus
+    - pcm
+  sample_rates:
+    - 8000
+    - 16000
+    - 24000
+    - 32000
+    - 44100
+  speed_range:
+    min: 0.25
+    max: 4.0
+    default: 1.0
+metadata:
+  pricing:
+    input: 0.05
+    output: 0
+    unit: 1000
+    currency: RMB
+    unit_label: 字符
+  description: 阿里开源语音合成模型，自然度高，支持多语言多方言
+parameters:
+  - name: voice
+    label: 音色
+    type: string
+    default: anna
+    help: 选择语音合成的音色
+    options:
+      - label: 沉稳男声(alex)
+        value: alex
+      - label: 低沉男声(benjamin)
+        value: benjamin
+      - label: 磁性男声(charles)
+        value: charles
+      - label: 欢快男声(david)
+        value: david
+      - label: 沉稳女声(anna)
+        value: anna
+      - label: 激情女声(bella)
+        value: bella
+      - label: 温柔女声(claire)
+        value: claire
+      - label: 欢快女声(diana)
+        value: diana
+  - name: response_format
+    label: 输出格式
+    type: string
+    default: mp3
+    options:
+      - label: MP3
+        value: mp3
+      - label: WAV
+        value: wav
+      - label: Opus
+        value: opus
+      - label: PCM
+        value: pcm
+  - name: speed
+    label: 语速
+    type: float
+    min: 0.25
+    max: 4.0
+    default: 1.0
+    precision: 0.1
+    help: 控制语音播放速度，0.25~4.0倍

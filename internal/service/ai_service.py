@@ -55,10 +55,10 @@ class AIService(BaseService):
         # 2.构建LLM
         # llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
         llm = ChatOpenAI(
-            model="Qwen/Qwen2.5-7B-Instruct",
+            model=os.getenv("BIGMODEL_MODEL_NAME"),
             temperature=0.5,
-            openai_api_base="https://api.siliconflow.cn/v1",
-            openai_api_key=os.getenv("SILICONFLOW_API_KEY"),
+            openai_api_base=os.getenv("BIGMODEL_URL"),
+            openai_api_key=os.getenv("BIGMODEL_API_KEY"),
         )
         # 3.组装优化链
         optimize_chain = prompt_template | llm | StrOutputParser()

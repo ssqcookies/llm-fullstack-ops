@@ -1,0 +1,16 @@
+model: BAAI/bge-large-zh-v1.5
+name: bge-large-zh-v1.5
+label: BGE-Large-ZH-v1.5
+model_type: embedding
+features: [ ]
+context_window: 512
+max_output_tokens: 1024
+attributes:
+  model: BAAI/bge-large-zh-v1.5
+metadata:
+  pricing:
+    input: 0
+    output: 0
+    unit: 0.001
+    currency: RMB
+parameters: [ ]

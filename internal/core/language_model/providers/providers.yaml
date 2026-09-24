@@ -34,10 +34,21 @@
   api_base: https://api.siliconflow.cn/v1
   supported_model_types:
     - chat
+    - embedding
+    - speech_to_text
+    - text_to_speech
 - name: ollama
   label: Ollama
   description: Ollama提供的本地离线大语言模型，例如qwen2.5-7b等。
   icon: icon.svg
   background: "#F9FAFB"
+  supported_model_types:
+    - chat
+- name: zhipu
+  label: 智谱AI
+  description: 智谱AI提供的模型，例如GLM-4.7-Flash、GLM-4.6V-Flash等，支持免费调用。
+  icon: icon.svg
+  background: "#FFFFFF"
+  api_base: https://open.bigmodel.cn/api/paas/v4
   supported_model_types:
     - chat

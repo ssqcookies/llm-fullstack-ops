@@ -2,3 +2,7 @@
 - qwen2.5-7b-instruct
 - qwen2.5-72b-instruct
 - bge-m3
+- bge-large-zh-v1.5
+- bge-large-en-v1.5
+- sensevoice-small
+- cosyvoice2-0.5b

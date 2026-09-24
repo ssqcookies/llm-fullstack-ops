@@ -25,7 +25,9 @@ class ModelType(str, Enum):
     """模型类型枚举"""
     CHAT = "chat"  # 聊天模型
     COMPLETION = "completion"  # 文本生成模型
-    EMBEDDING = "embedding"
+    EMBEDDING = "embedding"  # 向量嵌入模型
+    SPEECH_TO_TEXT = "speech_to_text"  # 语音识别模型
+    TEXT_TO_SPEECH = "text_to_speech"  # 语音合成模型
 
 
 class ModelParameterType(str, Enum):

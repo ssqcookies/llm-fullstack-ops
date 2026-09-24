@@ -459,6 +459,18 @@ class Router:
             view_func=self.conversation_handler.update_conversation_is_pinned,
         )
 
-        # 17.在应用上注册蓝图
+        # 17.语音转换模块
+        bp.add_url_rule(
+            "/audio/audio-to-text",
+            methods=["POST"],
+            view_func=self.audio_handler.audio_to_text,
+        )
+        bp.add_url_rule(
+            "/audio/message-to-audio",
+            methods=["POST"],
+            view_func=self.audio_handler.message_to_audio,
+        )
+
+        # 18.在应用上注册蓝图
         app.register_blueprint(bp)
         app.register_blueprint(openapi_bp)

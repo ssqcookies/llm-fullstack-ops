@@ -1,0 +1,30 @@
+model: FunAudioLLM/SenseVoiceSmall
+name: sensevoice-small
+label: SenseVoiceSmall
+model_type: speech_to_text
+features: [ ]
+context_window: 30000
+max_output_tokens: 0
+attributes:
+  model: FunAudioLLM/SenseVoiceSmall
+  languages:
+    - zh
+    - en
+    - ja
+    - ko
+    - yue
+  supported_formats:
+    - mp3
+    - wav
+    - m4a
+  max_duration: 3600
+  max_file_size: 52428800
+metadata:
+  pricing:
+    input: 0
+    output: 0
+    unit: 60
+    currency: RMB
+    unit_label: 秒
+  description: 阿里达摩院开源语音识别模型，支持50+语言和方言
+parameters: [ ]
