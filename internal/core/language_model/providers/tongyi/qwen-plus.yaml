@@ -1,3 +1,4 @@
+name: qwen-plus
 model: qwen-plus
 label: Qwen-Plus
 model_type: chat

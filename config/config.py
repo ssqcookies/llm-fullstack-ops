@@ -19,13 +19,20 @@ class Config:
 
     def __init__(self):
         # 开发环境关闭wtf的csrf保护
-        self.WTF_CSRF_ENABLED = False
+        self.WTF_CSRF_ENABLED = _get_bool_env("WTF_CSRF_ENABLED")
 
         # SQLAlchemy数据库配置
         self.SQLALCHEMY_DATABASE_URI = _get_env("SQLALCHEMY_DATABASE_URI")
         self.SQLALCHEMY_ENGINE_OPTIONS = {"pool_size": int(_get_env("SQLALCHEMY_POOL_SIZE")),
                                           "pool_recycle": int(_get_env("SQLALCHEMY_POOL_RECYCLE"))}
         self.SQLALCHEMY_ECHO = _get_env("SQLALCHEMY_ECHO")
+        
+        # Weaviate向量数据库配置
+        self.WEAVIATE_HTTP_HOST = _get_env("WEAVIATE_HTTP_HOST")
+        self.WEAVIATE_HTTP_PORT = _get_env("WEAVIATE_HTTP_PORT")
+        self.WEAVIATE_GRPC_HOST = _get_env("WEAVIATE_GRPC_HOST")
+        self.WEAVIATE_GRPC_PORT = _get_env("WEAVIATE_GRPC_PORT")
+        self.WEAVIATE_API_KEY = _get_env("WEAVIATE_API_KEY")
 
         # Redis配置
         self.REDIS_HOST = _get_env("REDIS_HOST")

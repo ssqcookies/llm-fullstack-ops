@@ -17,6 +17,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_core.tools import BaseTool, tool
 from sqlalchemy import desc
+from sqlalchemy.orm import joinedload
 
 from internal.core.agent.agents import AgentQueueManager, FunctionCallAgent
 from internal.core.agent.entities.agent_entity import AgentConfig
@@ -73,7 +74,7 @@ class AssistantAgentService(BaseService):
         language_model_manager = LanguageModelManager()
 
         provider = language_model_manager.get_provider("siliconflow")
-        model_entity = provider.get_model_entity("Qwen/Qwen2.5-7B-Instruct")
+        model_entity = provider.get_model_entity("qwen2.5-7b-instruct")
         ModelClass = provider.get_model_class(model_entity.model_type)
 
         llm = ModelClass(
@@ -194,15 +195,15 @@ class AssistantAgentService(BaseService):
             created_at_datetime = datetime.fromtimestamp(req.created_at.data)
             filters.append(Message.created_at <= created_at_datetime)
 
-        # 4.执行分页并查询数据
-        messages = paginator.paginate(
-            self.db.session.query(Message).filter(
-                Message.conversation_id == conversation.id,
-                Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
-                Message.answer != "",
-                *filters,
-            ).order_by(desc("created_at"))
-        )
+            # 4.执行分页并查询数据
+            messages = paginator.paginate(
+                self.db.session.query(Message).options(joinedload(Message.agent_thoughts)).filter(
+                    Message.conversation_id == conversation.id,
+                    Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
+                    Message.answer != "",
+                    *filters,
+                ).order_by(desc("created_at"))
+            )
 
         return messages, paginator
 

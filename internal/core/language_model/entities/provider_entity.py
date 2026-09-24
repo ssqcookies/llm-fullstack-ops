@@ -87,8 +87,7 @@ class Provider(BaseModel):
 
             # 12.修改对应模板的yaml数据，并创建ModelEntity随后传递给provider
             model_yaml_data["parameters"] = parameters
-            model_entity = ModelEntity(**model_yaml_data)
-            provider["model_entity_map"][model_entity.model_name] = model_entity
+            provider["model_entity_map"][model_name] = ModelEntity(**model_yaml_data)
 
         return provider
 
@@ -100,18 +99,22 @@ class Provider(BaseModel):
         return model_class
 
     def get_model_entity(self, model_name: str) -> Optional[ModelEntity]:
-        """根据传递的模型名字获取模型实体信息"""
+        """根据传递的模型名字获取模型实体信息
+        优先按内部标识名（map的key，即positions.yaml中的名字）查找，
+        查不到则按API模型名（model字段值）兜底查找，兼容两种格式。
+        """
         model_entity = self.model_entity_map.get(model_name, None)
-        if model_entity is None:
-            raise NotFoundException("该模型实体不存在，请核实后重试")
-        return model_entity
-
-    def get_model_entity_by_model(self, model: str) -> Optional[ModelEntity]:
-        """根据 model 字段值（API 模型名）查找模型实体"""
+        if model_entity is not None:
+            return model_entity
+        # 兜底：按API模型名（model字段值）查找
         for entity in self.model_entity_map.values():
-            if entity.model_name == model:
+            if entity.model_name == model_name:
                 return entity
         raise NotFoundException("该模型实体不存在，请核实后重试")
+
+    def get_model_entity_by_model(self, model: str) -> Optional[ModelEntity]:
+        """根据 model 字段值（API 模型名）查找模型实体（已废弃，直接用get_model_entity即可）"""
+        return self.get_model_entity(model)
 
     def get_model_entities(self) -> list[ModelEntity]:
         """获取该服务提供者的所有模型实体列表信息"""

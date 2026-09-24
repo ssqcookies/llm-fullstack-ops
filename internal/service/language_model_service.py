@@ -38,9 +38,14 @@ class LanguageModelService(BaseService):
         for provider in providers:
             # 3.获取提供商实体和模型实体列表
             provider_entity = provider.provider_entity
-            model_entities = provider.get_model_entities()
+            # 4.遍历model_entity_map，同时拿到内部标识名(name)和模型实体
+            models = []
+            for model_name_key, model_entity in provider.model_entity_map.items():
+                model_dict = convert_model_to_dict(model_entity)
+                model_dict["name"] = model_name_key  # 内部标识名，前端用于匹配/保存
+                models.append(model_dict)
 
-            # 4.构建响应字典结构
+            # 5.构建响应字典结构
             language_model = {
                 "name": provider_entity.name,
                 "position": provider.position,
@@ -49,7 +54,7 @@ class LanguageModelService(BaseService):
                 "description": provider_entity.description,
                 "background": provider_entity.background,
                 "support_model_types": provider_entity.supported_model_types,
-                "models": convert_model_to_dict(model_entities),
+                "models": models,
             }
             language_models.append(language_model)
 
@@ -67,7 +72,17 @@ class LanguageModelService(BaseService):
         if not model_entity:
             raise NotFoundException("该模型不存在")
 
-        return convert_model_to_dict(model_entity)
+        # 3.找到对应的内部标识名（name）
+        model_name_key = model_name
+        for key, entity in provider.model_entity_map.items():
+            if entity is model_entity or entity.model_name == model_entity.model_name:
+                model_name_key = key
+                break
+
+        # 4.返回结果，加上name字段
+        result = convert_model_to_dict(model_entity)
+        result["name"] = model_name_key
+        return result
 
     def get_language_model_icon(self, provider_name: str) -> tuple[bytes, str]:
         """根据传递的提供者名字获取提供商对应的图标信息"""

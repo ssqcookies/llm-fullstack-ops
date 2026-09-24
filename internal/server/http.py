@@ -4,12 +4,14 @@
 @File       :http.py
 """
 
+import logging
 import os
 
 from flask import Flask
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_weaviate import FlaskWeaviate
 
 from config.config import Config
 from internal.exception import CustomException
@@ -29,6 +31,7 @@ class Http(Flask):
             conf: Config,
             db: SQLAlchemy,
             migrate: Migrate,
+            weaviate: FlaskWeaviate,
             login_manager: LoginManager,
             # 中间件
             middleware: Middleware,
@@ -46,8 +49,8 @@ class Http(Flask):
 
         # 初始化flask扩展
         db.init_app(self)
-        migrate.init_app(self, db=db, directory="internal/migration")
-
+        weaviate.init_app(self)
+        migrate.init_app(self, db, directory="internal/migration")
         redis_extension.init_app(self)
         celery_extension.init_app(self)
         logging_extension.init_app(self)
@@ -86,7 +89,10 @@ class Http(Flask):
         router.register_router(self)
 
     def _register_error_handler(self, error: Exception):
-        # 1.异常信息是不是我们的自定义异常，如果是可以提取message和code等信息
+        # 1.日志记录异常信息
+        logging.error("An error occurred: %(error)s", {"error": error}, exc_info=True)
+
+        # 2.异常信息是不是我们的自定义异常，如果是可以提取message和code等信息
         if isinstance(error, CustomException):
             return json(Response(
                 code=error.code,

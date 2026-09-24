@@ -60,11 +60,12 @@ class Router:
     """路由注册"""
 
     def register_router(self, app: Flask):
-        # 1 创建蓝图
+        """注册路由"""
+        # 1.创建一个蓝图
         bp = Blueprint("llmops", __name__, url_prefix="")
         openapi_bp = Blueprint("openapi", __name__, url_prefix="")
 
-        # 2 将url与对应的控制器方法做绑定
+        # 2.将url与对应的控制器方法做绑定
         bp.add_url_rule("/ping", view_func=self.app_handler.ping)
         bp.add_url_rule("/apps", view_func=self.app_handler.get_apps_with_page)
         bp.add_url_rule("/apps", methods=["POST"], view_func=self.app_handler.create_app)
@@ -125,7 +126,17 @@ class Router:
             "/apps/<uuid:app_id>/conversations/messages",
             view_func=self.app_handler.get_debug_conversation_messages_with_page,
         )
-        # 内置插件模块
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/published-config",
+            view_func=self.app_handler.get_published_config,
+        )
+        bp.add_url_rule(
+            "/apps/<uuid:app_id>/published-config/regenerate-web-app-token",
+            methods=["POST"],
+            view_func=self.app_handler.regenerate_web_app_token,
+        )
+
+        # 3.内置插件广场模块
         bp.add_url_rule("/builtin-tools", view_func=self.builtin_tool_handler.get_builtin_tools)
         bp.add_url_rule(
             "/builtin-tools/<string:provider_name>/tools/<string:tool_name>",
@@ -147,7 +158,7 @@ class Router:
         )
         bp.add_url_rule(
             "/api-tools/validate-openapi-schema",
-            methods=["POST", "OPTIONS"],
+            methods=["POST"],
             view_func=self.api_tool_handler.validate_openapi_schema,
         )
         bp.add_url_rule(
@@ -173,6 +184,7 @@ class Router:
             methods=["POST"],
             view_func=self.api_tool_handler.delete_api_tool_provider,
         )
+
         # 4.上传文件模块
         bp.add_url_rule("/upload-files/file", methods=["POST"], view_func=self.upload_file_handler.upload_file)
         bp.add_url_rule("/upload-files/image", methods=["POST"], view_func=self.upload_file_handler.upload_image)
@@ -284,9 +296,11 @@ class Router:
         # 8.AI辅助模块
         bp.add_url_rule("/ai/optimize-prompt", methods=["POST"], view_func=self.ai_handler.optimize_prompt)
         bp.add_url_rule(
-            "/ai/suggested-questions", methods=["POST"],
+            "/ai/suggested-questions",
+            methods=["POST"],
             view_func=self.ai_handler.generate_suggested_questions,
         )
+
         # 9.API秘钥模块
         bp.add_url_rule("/openapi/api-keys", view_func=self.api_key_handler.get_api_keys_with_page)
         bp.add_url_rule(
@@ -314,6 +328,7 @@ class Router:
             methods=["POST"],
             view_func=self.openapi_handler.chat,
         )
+
         # 10.内置应用模块
         bp.add_url_rule("/builtin-apps/categories", view_func=self.builtin_app_handler.get_builtin_app_categories)
         bp.add_url_rule("/builtin-apps", view_func=self.builtin_app_handler.get_builtin_apps)

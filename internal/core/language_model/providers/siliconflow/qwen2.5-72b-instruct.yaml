@@ -1,4 +1,5 @@
 model: Qwen/Qwen2.5-72B-Instruct
+name: qwen2.5-72b-instruct
 label: Qwen2.5-72B
 model_type: chat
 features:

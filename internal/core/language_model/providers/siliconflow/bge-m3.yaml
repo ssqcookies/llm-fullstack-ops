@@ -1,4 +1,5 @@
 model: bge-m3
+name: bge-m3
 label: BGE-M3
 model_type: embedding
 features: [ ]

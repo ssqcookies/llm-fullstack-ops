@@ -30,9 +30,29 @@ class BuiltinAppService(BaseService):
         """获取分类列表信息"""
         return self.builtin_app_manager.get_categories()
 
-    def get_builtin_apps(self) -> list[BuiltinAppEntity]:
-        """获取所有内置应用实体信息列表"""
-        return self.builtin_app_manager.get_builtin_apps()
+    def get_builtin_apps(self, account: Account) -> list[dict]:
+        """获取所有内置应用实体信息列表，附带是否已添加到当前用户工作区的标记"""
+        # 1.获取所有内置应用
+        builtin_apps = self.builtin_app_manager.get_builtin_apps()
+
+        # 2.查询当前用户已添加的内置应用id集合
+        added_ids = set()
+        rows = (
+            self.db.session.query(App.builtin_app_id)
+            .filter(App.account_id == account.id, App.builtin_app_id != "")
+            .all()
+        )
+        for row in rows:
+            added_ids.add(row[0])
+
+        # 3.组装返回结果，每个内置应用加上is_added标记
+        result = []
+        for app in builtin_apps:
+            app_dict = app.model_dump()
+            app_dict["is_added"] = app.id in added_ids
+            result.append(app_dict)
+
+        return result
 
     def add_builtin_app_to_space(self, builtin_app_id: str, account: Account) -> App:
         """将指定的内置应用添加到个人空间下"""
@@ -47,6 +67,7 @@ class BuiltinAppService(BaseService):
             app = App(
                 account_id=account.id,
                 status=AppStatus.DRAFT,
+                builtin_app_id=builtin_app_id,
                 **builtin_app.model_dump(include={"name", "icon", "description"})
             )
             self.db.session.add(app)

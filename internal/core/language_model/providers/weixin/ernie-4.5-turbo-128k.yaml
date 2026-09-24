@@ -1,4 +1,5 @@
 model: ernie-4.5-turbo-128k
+name: ernie-4.5-turbo-128k
 label: ERNIE-4.5-Turbo-128K
 model_type: chat
 features:

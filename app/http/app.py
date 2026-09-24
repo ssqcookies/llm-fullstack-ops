@@ -9,6 +9,7 @@ import numpy as np
 from dotenv import load_dotenv
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_weaviate import FlaskWeaviate
 from injector import Injector
 
 from app.http import ExtensionModule
@@ -42,6 +43,7 @@ app = Http(
     __name__,
     conf=config,
     db=injector.get(SQLAlchemy),
+    weaviate=injector.get(FlaskWeaviate),
     migrate=injector.get(Migrate),
     login_manager=injector.get(LoginManager),
     middleware=injector.get(Middleware),

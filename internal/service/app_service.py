@@ -24,6 +24,7 @@ from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI
 from redis import Redis
 from sqlalchemy import func, desc
+from sqlalchemy.orm import joinedload
 from werkzeug.datastructures import FileStorage
 
 from internal.core.agent.agents import FunctionCallAgent, AgentQueueManager, ReACTAgent
@@ -661,7 +662,7 @@ class AppService(BaseService):
 
         # 5.执行分页并查询数据
         messages = paginator.paginate(
-            self.db.session.query(Message).filter(
+            self.db.session.query(Message).options(joinedload(Message.agent_thoughts)).filter(
                 Message.conversation_id == debug_conversation.id,
                 Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
                 Message.answer != "",
@@ -982,12 +983,12 @@ class AppService(BaseService):
             # 14.1 校验字典格式
             if not isinstance(text_to_speech, dict):
                 raise ValidationException("文本转语音设置格式错误")
-            # 14.2 校验字段类型
+            # 14.2 校验字段类型 （所有条件用 or 连接，任一不满足就报错）
             if (
                     set(text_to_speech.keys()) != {"enable", "voice", "auto_play"}
                     or not isinstance(text_to_speech["enable"], bool)
-                    # todo:等待多模态Agent实现时添加音色
-                    or text_to_speech["voice"] not in ["echo"]
+                    or not isinstance(text_to_speech["voice"], str)
+                    # todo: TTS 服务确定后，再限制具体音色列表
                     or not isinstance(text_to_speech["auto_play"], bool)
             ):
                 raise ValidationException("文本转语音设置格式错误")

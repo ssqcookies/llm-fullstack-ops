@@ -221,7 +221,7 @@ class AppHandler:
 
     @login_required
     def get_published_config(self, app_id: UUID):
-        """根据传递的应用id获取应用的发布配置信息"""
+        """根据传递的应用id获取应更新应用草稿配置成功发布配置信息"""
         published_config = self.app_service.get_published_config(app_id, current_user)
         return success_resp(published_config)
 

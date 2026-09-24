@@ -34,9 +34,8 @@ class BuiltinAppHandler:
     @login_required
     def get_builtin_apps(self):
         """获取所有内置应用列表信息"""
-        builtin_apps = self.builtin_app_service.get_builtin_apps()
-        resp = GetBuiltinAppsResp(many=True)
-        return success_resp(resp.dump(builtin_apps))
+        builtin_apps = self.builtin_app_service.get_builtin_apps(current_user)
+        return success_resp(builtin_apps)
 
     @login_required
     def add_builtin_app_to_space(self):

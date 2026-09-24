@@ -17,6 +17,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from sqlalchemy import desc
+from sqlalchemy.orm import joinedload
 
 from internal.core.agent.entities.queue_entity import AgentThought, QueueEvent
 from internal.entity.conversation_entity import (
@@ -304,16 +305,16 @@ class ConversationService(BaseService):
             created_at_datetime = datetime.fromtimestamp(req.created_at.data)
             filters.append(Message.created_at <= created_at_datetime)
 
-        # 4.执行分页并查询数据
-        messages = paginator.paginate(
-            self.db.session.query(Message).filter(
-                Message.conversation_id == conversation.id,
-                Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
-                Message.answer != "",
-                ~Message.is_deleted,
-                *filters,
-            ).order_by(desc("created_at"))
-        )
+            # 4.执行分页并查询数据
+            messages = paginator.paginate(
+                self.db.session.query(Message).options(joinedload(Message.agent_thoughts)).filter(
+                    Message.conversation_id == conversation.id,
+                    Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
+                    Message.answer != "",
+                    ~Message.is_deleted,
+                    *filters,
+                ).order_by(desc("created_at"))
+            )
 
         return messages, paginator
 
