@@ -4,212 +4,136 @@
 @File       :audio_service.py
 """
 
+import base64
 import json
-import os
+import logging
 from dataclasses import dataclass
-from datetime import datetime
-from typing import Generator
+from io import BytesIO
+from typing import Generator, Union
 from uuid import UUID
 
-from flask import current_app
 from injector import inject
-from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_core.tools import BaseTool, tool
-from sqlalchemy import desc
-from sqlalchemy.orm import joinedload
+from werkzeug.datastructures import FileStorage
 
-from internal.core.agent.agents import AgentQueueManager, FunctionCallAgent
-from internal.core.agent.entities.agent_entity import AgentConfig
-from internal.core.agent.entities.queue_entity import QueueEvent
-from internal.core.language_model.entities.model_entity import ModelFeature
-from internal.core.language_model.providers.openai.chat import Chat
-from internal.core.memory import TokenBufferMemory
-from internal.entity.conversation_entity import InvokeFrom, MessageStatus
-from internal.model import Account, Message
-from internal.schema.assistant_agent_schema import GetAssistantAgentMessagesWithPageReq, AssistantAgentChat
-from internal.task.app_task import auto_create_app
-from pkg.paginator import Paginator
+from internal.exception import NotFoundException, FailException
+from internal.model import Account, Message, App, AppConfig, AppConfigVersion
 from pkg.sqlalchemy import SQLAlchemy
+from .app_service import AppService
+from .asr_service import AsrService
 from .base_service import BaseService
-from .conversation_service import ConversationService
-from .faiss_service import FaissService
+from .tts_service import TtsService
+from ..entity.app_entity import AppStatus
+from ..entity.conversation_entity import InvokeFrom
 
 
 @inject
 @dataclass
-class AssistantAgentService(BaseService):
-    """辅助智能体服务"""
+class AudioService(BaseService):
+    """语音服务，涵盖语音转文本、消息流式输出语音"""
     db: SQLAlchemy
-    faiss_service: FaissService
-    conversation_service: ConversationService
+    app_service: AppService
+    asr_service: AsrService
+    tts_service: TtsService
 
-    def chat(self, req: AssistantAgentChat, account: Account) -> Generator:
-        """传递query与账号实现与辅助Agent进行会话"""
-        # 1.获取辅助Agent对应的id
-        assistant_agent_id = current_app.config.get("ASSISTANT_AGENT_ID")
+    def audio_to_text(
+        self,
+        audio: FileStorage,
+        provider_name: str = "siliconflow",
+        model_name: str = "sensevoice-small",
+    ) -> str:
+        """将传递的语音转换成文本"""
+        # 1.提取音频文件，并将音频文件转换成BytesIO
+        file_content = audio.stream.read()
+        audio_file = BytesIO(file_content)
+        audio_file.name = audio.filename or "recording.wav"
 
-        # 2.获取当前应用的调试会话信息
-        conversation = account.assistant_agent_conversation
+        # 2.调用ASR服务将音频转换成文字
+        try:
+            text = self.asr_service.transcribe(
+                audio_file=audio_file,
+                provider_name=provider_name,
+                model_name=model_name,
+            )
+        except Exception as error:
+            logging.error("语音转文字失败: %(error)s", {"error": error}, exc_info=True)
+            raise FailException("语音转文字失败，请稍后重试")
 
-        # 3.新建一条消息记录
-        message = self.create(
-            Message,
-            app_id=assistant_agent_id,
-            conversation_id=conversation.id,
-            invoke_from=InvokeFrom.DEBUGGER,
-            created_by=account.id,
-            query=req.query.data,
-            image_urls=req.image_urls.data,
-            status=MessageStatus.NORMAL,
-        )
+        # 3.返回识别的文字内容
+        return text
 
-        # 4.使用GPT模型作为辅助Agent的LLM大脑
-        llm = Chat(
-            model=os.getenv("BIGMODEL_MODEL_NAME"),
-            temperature=0.8,
-            openai_api_base=os.getenv("BIGMODEL_URL"),
-            openai_api_key=os.getenv("BIGMODEL_API_KEY"),
-            features=[ModelFeature.TOOL_CALL, ModelFeature.AGENT_THOUGHT, ModelFeature.IMAGE_INPUT],
-            metadata={},
-        )
+    def message_to_audio(
+        self,
+        message_id: UUID,
+        account: Account,
+        provider_name: str = "siliconflow",
+        model_name: str = "cosyvoice2-0.5b",
+    ) -> Generator:
+        """将消息转换成流式事件输出语音"""
+        # 1.根据传递的消息id获取消息并校验权限
+        message = self.get(Message, message_id)
+        if not message or message.is_deleted or message.answer.strip() == "" or message.created_by != account.id:
+            raise NotFoundException("该消息不存在，请核实后重试")
 
-        # 5.实例化TokenBufferMemory用于提取短期记忆
-        token_buffer_memory = TokenBufferMemory(
-            db=self.db,
-            conversation=conversation,
-            model_instance=llm,
-        )
-        history = token_buffer_memory.get_history_prompt_messages(message_limit=3)
+        # 2.校验消息归属的会话状态是否正常
+        conversation = message.conversation
+        if conversation is None or conversation.is_deleted or conversation.created_by != account.id:
+            raise NotFoundException("该消息会话不存在，请核实后重试")
 
-        # 6.将草稿配置中的tools转换成LangChain工具
-        tools = [
-            self.faiss_service.convert_faiss_to_tool(),
-            self.convert_create_app_to_tool(account.id),
-        ]
+        # 3.定义文本转语音启动配置、音色，默认为开启+anna音色
+        enable = True
+        voice = "anna"
 
-        # 7.构建Agent智能体，使用FunctionCallAgent
-        agent = FunctionCallAgent(
-            llm=llm,
-            agent_config=AgentConfig(
-                user_id=account.id,
-                invoke_from=InvokeFrom.ASSISTANT_AGENT,
-                enable_long_term_memory=True,
-                tools=tools,
-            ),
-        )
+        # 4.根据会话信息获取会话归属的应用
+        if message.invoke_from in [InvokeFrom.WEB_APP, InvokeFrom.DEBUGGER]:
+            app = self.get(App, conversation.app_id)
+            if not app:
+                raise NotFoundException("该消息会话归属应用不存在或校验失败，请核实后重试")
+            if message.invoke_from == InvokeFrom.DEBUGGER is True and app.account_id != account.id:
+                raise NotFoundException("该消息会话归属的应用不存在或校验失败，请核实后重试")
+            if message.invoke_from == InvokeFrom.WEB_APP is False and app.status != AppStatus.PUBLISHED:
+                raise NotFoundException("该消息会话归属的应用未发布，请核实后重试")
 
-        agent_thoughts = {}
-        for agent_thought in agent.stream({
-            "messages": [llm.convert_to_human_message(req.query.data, req.image_urls.data)],
-            "history": history,
-            "long_term_memory": conversation.summary,
-        }):
-            # 8.提取thought以及answer
-            event_id = str(agent_thought.id)
+            app_config: Union[AppConfig, AppConfigVersion] = (
+                app.draft_app_config
+                if message.invoke_from == InvokeFrom.DEBUGGER
+                else app.app_config
+            )
+            text_to_speech = app_config.text_to_speech
+            enable = text_to_speech.get("enable", False)
+            voice = text_to_speech.get("voice", "anna")
+        elif message.invoke_from == InvokeFrom.SERVICE_API:
+            raise NotFoundException("开放API消息不支持文本转语音服务")
 
-            # 9.将数据填充到agent_thought，便于存储到数据库服务中
-            if agent_thought.event != QueueEvent.PING:
-                # 10.除了agent_message数据为叠加，其他均为覆盖
-                if agent_thought.event == QueueEvent.AGENT_MESSAGE:
-                    if event_id not in agent_thoughts:
-                        # 11.初始化智能体消息事件
-                        agent_thoughts[event_id] = agent_thought
-                    else:
-                        # 12.叠加智能体消息
-                        agent_thoughts[event_id] = agent_thoughts[event_id].model_copy(update={
-                            "thought": agent_thoughts[event_id].thought + agent_thought.thought,
-                            # 消息相关数据
-                            "message": agent_thought.message,
-                            "message_token_count": agent_thought.message_token_count,
-                            "message_unit_price": agent_thought.message_unit_price,
-                            "message_price_unit": agent_thought.message_price_unit,
-                            # 答案相关字段
-                            "answer": agent_thoughts[event_id].answer + agent_thought.answer,
-                            "answer_token_count": agent_thought.answer_token_count,
-                            "answer_unit_price": agent_thought.answer_unit_price,
-                            "answer_price_unit": agent_thought.answer_price_unit,
-                            # Agent推理统计相关
-                            "total_token_count": agent_thought.total_token_count,
-                            "total_price": agent_thought.total_price,
-                            "latency": agent_thought.latency,
-                        })
-                else:
-                    # 13.处理其他类型事件的消息
-                    agent_thoughts[event_id] = agent_thought
-            data = {
-                **agent_thought.model_dump(include={
-                    "event", "thought", "observation", "tool", "tool_input", "answer", "latency",
-                    "total_token_count",
-                }),
-                "id": event_id,
+        # 5.根据状态获取不同的配置并判断是否开启文字转语音
+        if enable is False:
+            raise FailException("该应用未开启文字转语音功能，请核实后重试")
+
+        # 6.调用TTS服务将消息answer转换成流式事件输出语音
+        try:
+            audio_stream = self.tts_service.synthesize_stream(
+                text=message.answer.strip(),
+                provider_name=provider_name,
+                model_name=model_name,
+                voice=voice,
+                response_format="mp3",
+            )
+        except Exception as error:
+            logging.error("文字转语音失败: %(error)s", {"error": error}, exc_info=True)
+            raise FailException("文字转语音失败，请稍后重试")
+
+        # 7.封装流式事件输出语音数据
+        def tts() -> Generator:
+            """内部函数，从音频流中逐块读取并封装SSE事件"""
+            common_data = {
                 "conversation_id": str(conversation.id),
                 "message_id": str(message.id),
-                "task_id": str(agent_thought.task_id),
+                "audio": "",
             }
-            yield f"event: {agent_thought.event}\ndata:{json.dumps(data)}\n\n"
+            for chunk in audio_stream:
+                if not chunk:
+                    continue
+                data = {**common_data, "audio": base64.b64encode(chunk).decode("utf-8")}
+                yield f"event: tts_message\ndata: {json.dumps(data)}\n\n"
+            yield f"event: tts_end\ndata: {json.dumps(common_data)}\n\n"
 
-        # 22.将消息以及推理过程添加到数据库
-        self.conversation_service.save_agent_thoughts(
-            account_id=account.id,
-            app_id=assistant_agent_id,
-            app_config={"long_term_memory": {"enable": True}},
-            conversation_id=conversation.id,
-            message_id=message.id,
-            agent_thoughts=[agent_thought for agent_thought in agent_thoughts.values()],
-        )
-
-    @classmethod
-    def stop_chat(cls, task_id: UUID, account: Account) -> None:
-        """根据传递的任务id+账号停止某次响应会话"""
-        AgentQueueManager.set_stop_flag(task_id, InvokeFrom.ASSISTANT_AGENT, account.id)
-
-    def get_conversation_messages_with_page(
-            self, req: GetAssistantAgentMessagesWithPageReq, account: Account
-    ) -> tuple[list[Message], Paginator]:
-        """根据传递的请求+账号获取与辅助Agent对话的消息分页列表"""
-        # 1.获取应用的调试会话
-        conversation = account.assistant_agent_conversation
-
-        # 2.构建分页器并构建游标条件
-        paginator = Paginator(db=self.db, req=req)
-        filters = []
-        if req.created_at.data:
-            # 3.将时间戳转换成DateTime
-            created_at_datetime = datetime.fromtimestamp(req.created_at.data)
-            filters.append(Message.created_at <= created_at_datetime)
-
-        # 4.执行分页并查询数据
-        messages = paginator.paginate(
-            self.db.session.query(Message).options(joinedload(Message.agent_thoughts)).filter(
-                Message.conversation_id == conversation.id,
-                Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
-                Message.answer != "",
-                *filters,
-            ).order_by(desc("created_at"))
-        )
-
-        return messages, paginator
-
-    def delete_conversation(self, account: Account) -> None:
-        """根据传递的账号，清空辅助Agent智能体会话消息列表"""
-        self.update(account, assistant_agent_conversation_id=None)
-
-    @classmethod
-    def convert_create_app_to_tool(cls, account_id: UUID) -> BaseTool:
-        """定义自动创建Agent应用LangChain工具"""
-
-        class CreateAppInput(BaseModel):
-            """创建Agent/应用输入结构"""
-            name: str = Field(description="需要创建的Agent/应用名称，长度不超过50个字符")
-            description: str = Field(description="需要创建的Agent/应用描述，请详细概括该应用的功能")
-
-        @tool("create_app", args_schema=CreateAppInput)
-        def create_app(name: str, description: str) -> str:
-            """如果用户提出了需要创建一个Agent/应用，你可以调用此工具，参数的输入是应用的名称+描述，返回的数据是创建后的成功提示"""
-            # 1.调用celery异步任务在后端创建应用
-            auto_create_app.delay(name, description, account_id)
-
-            # 2.返回成功提示
-            return f"已调用后端异步任务创建Agent应用。\n应用名称: {name}\n应用描述: {description}"
-
-        return create_app
+        return tts()

@@ -12,7 +12,6 @@ from uuid import UUID
 
 from flask import current_app
 from injector import inject
-from langchain_core.messages import HumanMessage
 from sqlalchemy import desc
 
 from internal.entity.app_entity import AppStatus
@@ -92,6 +91,7 @@ class WebAppService(BaseService):
             invoke_from=InvokeFrom.WEB_APP,
             created_by=account.id,
             query=req.query.data,
+            image_urls=req.image_urls.data,
             status=MessageStatus.NORMAL,
         )
 
@@ -147,7 +147,7 @@ class WebAppService(BaseService):
         # 13.定义字典存储推理过程，并调用智能体获取消息
         agent_thoughts = {}
         for agent_thought in agent.stream({
-            "messages": [HumanMessage(req.query.data)],
+            "messages": [llm.convert_to_human_message(req.query.data, req.image_urls.data)],
             "history": history,
             "long_term_memory": conversation.summary,
         }):

@@ -24,6 +24,8 @@ from internal.handler import (
     AnalysisHandler,
     WebAppHandler,
     ConversationHandler,
+    AudioHandler,
+
 )
 
 
@@ -51,6 +53,7 @@ class Router:
     analysis_handler: AnalysisHandler
     web_app_handler: WebAppHandler
     conversation_handler: ConversationHandler
+    audio_handler: AudioHandler
 
     # @dataclass Python3.7+ 内置 数据类装饰器，简化类样板代码：
     # 自动根据类属性 app_handler: AppHandler 生成 __init__ 构造方法

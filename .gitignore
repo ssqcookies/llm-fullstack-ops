@@ -32,6 +32,9 @@ MANIFEST
 # NLTK 数据
 internal/core/unstructured/nltk_data/
 
+# 向量索引文件
+internal/core/vector_store/index.faiss
+
 # PyInstaller
 #   Usually these files are written by a python script from a template
 #   before PyInstaller builds the exe, so as to inject date/other infos into it.

@@ -5,6 +5,7 @@ from .api_key_service import ApiKeyService
 from .api_tool_service import ApiToolService
 from .app_config_service import AppConfigService
 from .app_service import AppService
+from .asr_service import AsrService
 from .assistant_agent_service import AssistantAgentService
 from .audio_service import AudioService
 from .base_service import BaseService
@@ -31,6 +32,7 @@ from .upload_file_service import UploadFileService
 from .vector_database_service import VectorDatabaseService
 from .web_app_service import WebAppService
 from .workflow_service import WorkflowService
+from .tts_service import TtsService
 
 __all__ = [
     "BaseService",
@@ -65,5 +67,6 @@ __all__ = [
     "AnalysisService",
     "WebAppService",
     "AudioService",
-
+    "AsrService",
+    "TtsService",
 ]
